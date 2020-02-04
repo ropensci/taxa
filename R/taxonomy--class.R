@@ -183,7 +183,7 @@ Taxonomy <- R6::R6Class(
     # Looks for names of data in a expression for use with NSE
     names_used = function(...) {
       decompose <- function(x) {
-        if (class(x) %in% c("call", "(", "{") && x[[1]] != "$") {
+        if (any(class(x) %in% c("call", "(", "{")) && x[[1]] != "$") {
           return(lapply(1:length(x), function(i) decompose(x[[i]])))
         } else {
           return(deparse(x))

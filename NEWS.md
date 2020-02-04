@@ -1,3 +1,11 @@
+taxa 0.3.3
+==========
+
+### Bug fixes
+
+* Numeric column names in tables in `taxmap` are now supported
+* Various small bug fixes
+
 taxa 0.3.2
 ==========
 
