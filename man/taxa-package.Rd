@@ -165,7 +165,7 @@ will not modify \code{my_obj}.
 This is a rather advanced topic.
 
 Like packages such as \code{ggplot2} and \link{dplyr}, the \code{taxa} package uses
-\href{https://adv-r.hadley.nz/metaprogramming.html}{non-standard evaluation} to allow code
+non-standard evaluation to allow code
 to be more readable and shorter. In effect, there are variables that only
 "exist" inside a function call and depend on what is passed to that function
 as the first parameter (usually a class object). For example, in the \code{dpylr}

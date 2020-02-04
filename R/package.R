@@ -142,7 +142,7 @@
 #'   This is a rather advanced topic.
 #'
 #'   Like packages such as `ggplot2` and [dplyr], the `taxa` package uses
-#'   [non-standard evaluation](https://adv-r.hadley.nz/metaprogramming.html) to allow code
+#'   non-standard evaluation to allow code
 #'   to be more readable and shorter. In effect, there are variables that only
 #'   "exist" inside a function call and depend on what is passed to that function
 #'   as the first parameter (usually a class object). For example, in the `dpylr`
