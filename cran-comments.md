@@ -13,7 +13,7 @@
 
 ### metacoder
 
-I also maintain `metacoder`. The current CRAN version will have test errors with this version of `taxa`, but I will be submitting an update to `metacoder` that is compatible with this version of `taxa` and builds without errors shortly after submitting this version of `taxa`.
+I also maintain `metacoder` and the current CRAN version should be compatible.
 
 ### taxlist
 
