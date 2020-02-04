@@ -464,7 +464,7 @@ run automatically when its name is used this way:
 
 This is an example of [Non-standard
 evaluation](http://adv-r.had.co.nz/Computing-on-the-language.html)
-(NSE). NSE makes codes easier to read an write. The call to `supertaxa`
+(NSE). NSE makes codes easier to read and write. The call to `supertaxa`
 could also have been written without NSE like so:
 
     supertaxa(tax, subset = taxon_ranks(tax) == "genus", value = "taxon_ranks")
