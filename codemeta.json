@@ -10,14 +10,14 @@
   "codeRepository": "https://github.com/ropensci/taxa",
   "issueTracker": "https://github.com/ropensci/taxa/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
-    "version": "3.5.1",
+    "version": "3.6.1",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 3.5.1 (2018-07-02)",
+  "runtimePlatform": "R version 3.6.1 (2019-07-05)",
   "provider": {
     "@id": "https://cran.r-project.org",
     "@type": "Organization",
@@ -250,7 +250,7 @@
   "developmentStatus": "[![Project Status: WIP - Initial development is in progress, but there",
   "releaseNotes": "https://github.com/ropensci/taxa/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/taxa/blob/master/README.md",
-  "fileSize": "1835.02KB",
+  "fileSize": "1835.998KB",
   "applicationCategory": "Taxonomy",
   "isPartOf": "https://ropensci.org",
   "keywords": ["taxonomy", "biology", "hierarchy", "taxon", "data-cleaning", "rstats", "r", "r-package"],
@@ -290,5 +290,9 @@
         }
       }
     }
-  ]
+  ],
+  "relatedLink": "https://docs.ropensci.org/taxa",
+  "contributor": {},
+  "copyrightHolder": {},
+  "funder": {}
 }
