@@ -3,13 +3,15 @@
 \name{ex_hierarchy2}
 \alias{ex_hierarchy2}
 \title{An example Hierarchy object}
-\format{A \code{\link[=hierarchy]{hierarchy()}} object with
+\format{
+A \code{\link[=hierarchy]{hierarchy()}} object with
 \itemize{
 \item name: Felidae / rank: family / id: 9681
 \item name: Puma / rank: genus / id: 146712
 \item name: Puma concolor / rank: species / id: 9696
 }
-Based on NCBI taxonomic classification}
+Based on NCBI taxonomic classification
+}
 \source{
 Created from the example code in the \code{\link[=hierarchy]{hierarchy()}}
 documentation.

@@ -45,7 +45,7 @@ Suggests:
     roxygen2 (>= 6.0.1),
     testthat,
     rmarkdown (>= 0.9.6)
-RoxygenNote: 7.0.2.9000
+RoxygenNote: 7.1.0
 X-schema.org-applicationCategory: Taxonomy
 X-schema.org-keywords: taxonomy, biology, hierarchy
 X-schema.org-isPartOf: https://ropensci.org

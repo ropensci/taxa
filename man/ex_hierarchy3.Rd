@@ -3,7 +3,8 @@
 \name{ex_hierarchy3}
 \alias{ex_hierarchy3}
 \title{An example Hierarchy object}
-\format{A \code{\link[=hierarchy]{hierarchy()}} object with
+\format{
+A \code{\link[=hierarchy]{hierarchy()}} object with
 \itemize{
 \item name: Chordata / rank: phylum / id: 158852
 \item name: Vertebrata / rank: subphylum / id: 331030
@@ -12,7 +13,8 @@
 \item name: Salmo / rank: genus / id: 161994
 \item name: Salmo salar / rank: species / id: 161996
 }
-Based on ITIS taxonomic classification}
+Based on ITIS taxonomic classification
+}
 \source{
 Created from the example code in the \code{\link[=hierarchy]{hierarchy()}}
 documentation.

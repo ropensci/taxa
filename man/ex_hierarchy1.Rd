@@ -3,13 +3,15 @@
 \name{ex_hierarchy1}
 \alias{ex_hierarchy1}
 \title{An example Hierarchy object}
-\format{A \code{\link[=hierarchy]{hierarchy()}} object with
+\format{
+A \code{\link[=hierarchy]{hierarchy()}} object with
 \itemize{
 \item name: Poaceae / rank: family / id: 4479
 \item name: Poa / rank: genus / id: 4544
 \item name: Poa annua / rank: species / id: 93036
 }
-Based on NCBI taxonomic classification}
+Based on NCBI taxonomic classification
+}
 \source{
 Created from the example code in the \code{\link[=hierarchy]{hierarchy()}}
 documentation.

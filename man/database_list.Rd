@@ -4,7 +4,9 @@
 \name{database_list}
 \alias{database_list}
 \title{Database list}
-\format{An object of class \code{list} of length 8.}
+\format{
+An object of class \code{list} of length 8.
+}
 \usage{
 database_list
 }

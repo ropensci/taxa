@@ -1,3 +1,10 @@
+current
+==========
+
+### Bug fixes
+
+* Fixed bug in `n_obs` that would cause an error when used on an object with tables with columns named by numbers. 
+
 taxa 0.3.3
 ==========
 

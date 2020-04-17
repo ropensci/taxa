@@ -695,7 +695,7 @@ Taxmap <- R6::R6Class(
       # If no data is specified, use the first dataset
       if (is.null(data)) {
         if (length(self$data) > 0) {
-          data <- 1
+          data <- names(self$data)[1]
         } else {
           stop(paste0('There are no data sets to get observation info from.'))
         }
@@ -723,7 +723,7 @@ Taxmap <- R6::R6Class(
 
       if (is.null(data)) {
         if (length(self$data) > 0) {
-          data <- 1
+          data <- names(self$data)[1]
         } else {
           stop(paste0('There are no data sets to get observation info from.'))
         }

@@ -3,7 +3,9 @@
 \name{ex_taxmap}
 \alias{ex_taxmap}
 \title{An example taxmap object}
-\format{A \code{\link[=taxmap]{taxmap()}} object.}
+\format{
+A \code{\link[=taxmap]{taxmap()}} object.
+}
 \source{
 Created from the example code in the \code{\link[=taxmap]{taxmap()}}
 documentation.

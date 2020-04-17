@@ -3,7 +3,9 @@
 \name{ex_taxonomy}
 \alias{ex_taxonomy}
 \title{An example Taxonomy object}
-\format{A \code{\link[=taxonomy]{taxonomy()}} object.}
+\format{
+A \code{\link[=taxonomy]{taxonomy()}} object.
+}
 \source{
 Created from the example code in the \code{\link[=taxonomy]{taxonomy()}}
 documentation.

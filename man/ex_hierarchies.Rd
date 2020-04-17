@@ -3,7 +3,9 @@
 \name{ex_hierarchies}
 \alias{ex_hierarchies}
 \title{An example hierarchies object}
-\format{A \code{\link[=hierarchies]{hierarchies()}} object.}
+\format{
+A \code{\link[=hierarchies]{hierarchies()}} object.
+}
 \source{
 Created from the example code in the \code{\link[=hierarchies]{hierarchies()}}
 documentation.
