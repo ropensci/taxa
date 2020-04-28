@@ -10,7 +10,7 @@ Description: Provides taxonomic classes for
     package implementing data standards and methods for 
     taxonomic data", Zachary S.L. Foster, Scott Chamberlain,  
     Niklaus J. Grünwald (2018) <doi:10.12688/f1000research.14013.2>.
-Version: 0.3.3
+Version: 0.3.4
 Authors@R: c(
     person("Scott", "Chamberlain", role = "aut", 
        email = "myrmecocystus+r@gmail.com", comment = c(ORCID = "0000-0003-1444-9135")),
