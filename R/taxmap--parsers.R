@@ -414,7 +414,7 @@ parse_tax_data <- function(tax_data, datasets = list(), class_cols = 1,
     if (!is.na(sort_var)) {
       target_value <- get_sort_var(dataset, sort_var)
       source_value <- get_sort_var(tax_data, names(sort_var))
-      obs_taxon_ids <- output$input_ids[match(target_value, source_value)]
+      obs_taxon_ids <- unname(output$input_ids[match(target_value, source_value)])
       if (is.data.frame(dataset)) {
         dataset <- dplyr::bind_cols(dplyr::tibble(taxon_id = obs_taxon_ids),
                                     dataset)
