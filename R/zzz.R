@@ -11,7 +11,7 @@
 #'
 #' @section Attribution:
 #'
-#' This list was adapted from a similar one in [taxize].
+#' This list was adapted from a similar one in taxize.
 #'
 #'
 #' @keywords internal
