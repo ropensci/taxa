@@ -18,7 +18,7 @@ from multiple databases are combined.
 \section{Attribution}{
 
 
-This list was adapted from a similar one in \link{taxize}.
+This list was adapted from a similar one in taxize.
 }
 
 \keyword{internal}
