@@ -51,7 +51,7 @@ An object of type \code{\link[=taxmap]{taxmap()}}
 \description{
 Randomly sample some proportion of observations from a \code{\link[=taxmap]{taxmap()}}
 object. Weights can be specified for observations or their taxa. See
-\code{\link[dplyr:sample_frac]{dplyr::sample_frac()}} for the inspiration for this function. Calling the
+\code{\link[dplyr:sample_n]{dplyr::sample_frac()}} for the inspiration for this function. Calling the
 function using the \code{obj$sample_frac_obs(...)} style edits "obj" in place, unlike
 most R functions. However, calling the function using the \code{sample_frac_obs(obj, ...)} imitates R's traditional copy-on-modify semantics, so "obj" would not
 be changed; instead a changed version would be returned, like most R

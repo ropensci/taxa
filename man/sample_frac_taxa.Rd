@@ -49,7 +49,7 @@ An object of type \code{\link[=taxonomy]{taxonomy()}} or \code{\link[=taxmap]{ta
 Randomly sample some proportion of taxa from a \code{\link[=taxonomy]{taxonomy()}} or \code{\link[=taxmap]{taxmap()}}
 object. Weights can be specified for taxa or the observations assigned to
 them. See
-\code{\link[dplyr:sample_frac]{dplyr::sample_frac()}} for the inspiration for this function.
+\code{\link[dplyr:sample_n]{dplyr::sample_frac()}} for the inspiration for this function.
 \preformatted{
 obj$sample_frac_taxa(size, taxon_weight = NULL,
   obs_weight = NULL, obs_target = NULL,

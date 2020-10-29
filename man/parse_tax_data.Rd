@@ -92,7 +92,7 @@ Cannot be used with the \code{sep}, \code{class_regex}, or \code{class_key} opti
 }
 \description{
 Reads taxonomic information and associated data in tables, lists, and vectors and stores it in a
-\code{\link[taxa:taxmap]{taxa::taxmap()}} object. \href{https://en.wikipedia.org/wiki/Taxonomy_(biology)#Classifying_organisms}{Taxonomic classifications} must be
+\code{\link[=taxmap]{taxmap()}} object. \href{https://en.wikipedia.org/wiki/Taxonomy_(biology)#Classifying_organisms}{Taxonomic classifications} must be
 present.
 }
 \examples{

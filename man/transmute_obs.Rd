@@ -20,7 +20,7 @@ An object of type \code{\link[=taxmap]{taxmap()}}
 }
 \description{
 Replace columns of tables in \code{obj$data} in \code{\link[=taxmap]{taxmap()}} objects. See
-\code{\link[dplyr:transmute]{dplyr::transmute()}} for the inspiration for this function and more
+\code{\link[dplyr:mutate]{dplyr::transmute()}} for the inspiration for this function and more
 information. Calling the function using the \code{obj$transmute_obs(...)} style
 edits "obj" in place, unlike most R functions. However, calling the function
 using the \code{transmute_obs(obj, ...)} imitates R's traditional copy-on-modify

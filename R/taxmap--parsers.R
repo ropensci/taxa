@@ -399,7 +399,7 @@ parse_tax_data <- function(tax_data, datasets = list(), class_cols = 1,
     } else {
       output$data$class_data$match  <- NULL
     }
-    output$data$class_data <- dplyr::as.tbl(output$data$class_data)
+    output$data$class_data <- tibble::as_tibble(output$data$class_data)
   }
 
   # Add taxonomic source to datasets
@@ -433,7 +433,7 @@ parse_tax_data <- function(tax_data, datasets = list(), class_cols = 1,
 
   # Convert additional tables to tibbles
   are_tables <- vapply(output$data, is.data.frame, logical(1))
-  output$data[are_tables] <- lapply(output$data[are_tables], dplyr::as.tbl)
+  output$data[are_tables] <- lapply(output$data[are_tables], tibble::as_tibble)
 
   # Fix incorrect taxon ids in data if a list of data.frames is given
   if (is_list_of_frames && include_tax_data) {

@@ -1,3 +1,8 @@
+taxa [current]
+==========
+
+* Replaced depreciated `as.tbl` function from `dplyr`
+
 taxa 0.3.4
 ==========
 
