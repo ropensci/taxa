@@ -1,12 +1,3 @@
-#' Concepts used in the taxa package
-#'
-#' Not done yet.
-#'
-#' @name concepts
-NULL
-
-
-
 #' taxa printing functions
 #'
 #' Functions used internally for printing information in taxon objects. They have to be exported to
@@ -18,7 +9,7 @@ NULL
 
 #' taxa coercion functions
 #'
-#' Functions used internally for coercing taxon objects annd other objects to common data types.
+#' Functions used internally for coercing taxon objects and other objects to common data types.
 #' They have to be exported to work, but they are not intended to be directly used by most users.
 #'
 #' @name taxa_coercion_funcs
@@ -34,7 +25,7 @@ NULL
 NULL
 
 
-#' taxa comparision functions
+#' taxa comparison functions
 #'
 #' Functions used internally for casting taxon objects to other types. They have to be exported to
 #' work, but they are not intended to be directly used by most users.

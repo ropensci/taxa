@@ -26,6 +26,40 @@ test_that("taxon objects can be created with names", {
   expect_equal(names(x), letters[1:3])
 })
 
+test_that("taxon objects can be created with as_taxon", {
+  expect_equal(as_taxon(c('A', 'B', 'C')), taxon(c('A', 'B', 'C')))
+  expect_equal(as_taxon(taxon(c('A', 'B', 'C'))), taxon(c('A', 'B', 'C')))
+})
+
+# Printing taxon objects
+
+test_that("taxon objects can be printed", {
+  x <- taxon(name = c('Homo sapiens', 'Bacillus', 'Ascomycota', 'Ericaceae'),
+             rank = c('species', 'genus', 'phylum', 'family'),
+             id = taxon_id(c('9606', '1386', '4890', '4345'), db = 'ncbi'),
+             auth = c('Linnaeus, 1758', 'Cohn 1872', NA, 'Juss., 1789'))
+  names(x) <- c('a', 'b', 'c', 'd')
+  verify_output(path = test_path('print_outputs', 'taxon.txt'),
+                code = {print(x)},
+                crayon = TRUE)
+  options(max.print = 1000)
+  expect_output(print(rep(x, 1000)), regexp = 'reached getOption("max.print")', fixed = TRUE)
+  expect_output(print(taxon()), "<taxon[0]>", fixed = TRUE)
+})
+
+test_that("taxon objects can be printed in tables", {
+  x <- taxon(name = c('Homo sapiens', 'Bacillus', 'Ascomycota', 'Ericaceae'),
+             rank = c('species', 'genus', 'phylum', 'family'),
+             id = taxon_id(c('9606', '1386', '4890', '4345'), db = 'ncbi'),
+             auth = c('Linnaeus, 1758', 'Cohn 1872', NA, 'Juss., 1789'))
+  names(x) <- c('a', 'b', 'c', 'd')
+  verify_output(path = test_path('print_outputs', 'taxon_tibble.txt'),
+                code = {print(tibble::tibble(x))},
+                crayon = TRUE)
+  verify_output(path = test_path('print_outputs', 'taxon_data_frame.txt'),
+                code = {print(data.frame(x))},
+                crayon = TRUE)
+})
 
 # Subsetting taxon objects with `[`
 
@@ -62,6 +96,10 @@ test_that("taxon objects can be `[[` subset by name", {
   expect_equal(x[['c']], taxon('C')) # names are dropped for [[
 })
 
+test_that("(taxon) selecting multiple with `[[` errors", {
+  x <- taxon(c('A', 'B', 'C'), .names = letters[1:3])
+  expect_error(x[[1:3]], 'attempt to select more than one element')
+})
 
 # Setting names of taxon objects
 
@@ -81,6 +119,8 @@ test_that("taxon objects can have values assigned to them", {
   x <- taxon(c('A', 'B', 'C'), .names = letters[1:3])
   x[2] <- '4'
   expect_equal(x[2], taxon('4', .names = letters[2]))
+  x[[2]] <- '5'
+  expect_equal(x[[2]], taxon('5'))
   x['b'] <- '4'
   expect_equal(x[2], taxon('4', .names = letters[2]))
   x[c(FALSE, TRUE, FALSE)] <- '4'
@@ -93,6 +133,33 @@ test_that("taxon assignment is recycled correctly", {
   expect_equal(x,  taxon(c('4', '4', '4'), .names = letters[1:3]))
 })
 
+test_that("(taxon) multiple items can not be assigned with [[", {
+  x <- taxon(c('A', 'B', 'C'), .names = letters[1:3])
+  expect_error(x[[1:3]] <- '4', 'attempt to select more than one element')
+})
+
+
+# Assign values to components
+
+test_that("components of taxon objects can be assigned", {
+  x <- taxon(c('A', 'B', 'C'))
+  tax_auth(x) <- c('a', 'b', 'c')
+  expect_equal(tax_auth(x), taxon_authority(c('a', 'b', 'c')))
+  tax_name(x) <- c('d', 'e', 'f')
+  expect_equal(tax_name(x), c('d', 'e', 'f'))
+  tax_rank(x) <- c('a', 'b', 'c')
+  expect_equal(tax_rank(x), taxon_rank(c('a', 'b', 'c')))
+  tax_id(x) <- c('1', '2', '3')
+  expect_equal(tax_id(x), taxon_id(c('1', '2', '3')))
+  tax_db(x) <- c('ncbi', 'ncbi', 'ncbi')
+  expect_equal(tax_db(x), taxon_db(c('ncbi', 'ncbi', 'ncbi')))
+  tax_author(x) <- c('g', 'h', 'i')
+  expect_equal(tax_author(x), c('g', 'h', 'i'))
+  tax_date(x) <- c('4', '5', '6')
+  expect_equal(tax_date(x), c('4', '5', '6'))
+  tax_cite(x) <- c('x', 'y', 'z')
+  expect_equal(tax_cite(x), c('x', 'y', 'z'))
+})
 
 # Can be concatenated
 
@@ -244,3 +311,29 @@ test_that("named taxon objects can be converted to a tibble", {
                    tax_cite = NA_character_)
   )
 })
+
+# works with is.na
+
+test_that("taxon objects work with is.na", {
+  x <- taxon(c('a', NA, 'c'))
+  expect_equal(is.na(x), is.na(c('a', NA, 'c')))
+})
+
+
+# works with %in%
+
+test_that("taxon objects work with %in%", {
+  x <- taxon(name = c('Homo sapiens', 'Bacillus', 'Ascomycota', 'Ericaceae'),
+             rank = c('species', 'genus', 'phylum', 'family'),
+             id = taxon_id(c('9606', '1386', '4890', '4345'), db = 'ncbi'),
+             auth = c('Linnaeus, 1758', 'Cohn 1872', NA, 'Juss., 1789'))
+  expect_true('Homo sapiens' %in% x)
+  expect_equal(x %in% c('Homo sapiens', 'Bacillus'), tax_name(x) %in% c('Homo sapiens', 'Bacillus'))
+  expect_true(x[1] %in% x)
+  expect_equal(x %in% x[1:2], tax_name(x) %in% c('Homo sapiens', 'Bacillus'))
+  expect_false('sapiens' %in% x)
+  expect_true(factor('Homo sapiens') %in% x)
+  expect_equal(which(x %in% factor('Homo sapiens')), 1)
+})
+
+

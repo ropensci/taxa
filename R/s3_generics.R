@@ -55,11 +55,20 @@
 }
 
 
-#' Coerce taxa objects to a Data Frame
+#' Convert a taxa object to a `data.frame`
 #'
-#' Convert taxa objects to data.frames.
+#' Convert the information in a taxa object to a `data.frame` using base R
+#' vectors as columns. Use [as_tibble] to convert to tibbles.
 #'
 #' @inheritParams base::as.data.frame
+#' @param x An object defined by taxa, such as [taxon] or [taxon_id]
+#'
+#' @examples
+#' x <- taxon(name = c('Homo sapiens', 'Bacillus', 'Ascomycota', 'Ericaceae'),
+#'            rank = c('species', 'genus', 'phylum', 'family'),
+#'            id = taxon_id(c('9606', '1386', '4890', '4345'), db = 'ncbi'),
+#'            auth = c('Linnaeus, 1758', 'Cohn 1872', NA, 'Juss., 1789'))
+#' as_data_frame(x)
 #'
 #' @export
 as_data_frame <- function(x, row.names = NULL, optional = FALSE, ...,

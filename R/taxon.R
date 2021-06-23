@@ -43,9 +43,8 @@ new_taxon <- function(.names = NULL, name = character(), rank = taxon_rank(), id
 
 #' Taxon class
 #'
-#' \Sexpr[results=rd, stage=render]{taxa:::lifecycle("experimental")}
+#' \Sexpr[results=rd, stage=render]{taxa:::lifecycle("maturing")}
 #' Used to store information about taxa, such as names, ranks, and IDs.
-#' For more information on what each class is designed for, see the [concepts] section of the help pages.
 #'
 #' @param name The names of taxa. Inputs with be coerced into a [character] vector if anything else
 #'   is given.
@@ -95,7 +94,6 @@ new_taxon <- function(.names = NULL, name = character(), rank = taxon_rank(), id
 #' # Manipulate taxon name vectors
 #' x[1:3]
 #' x[tax_rank(x) > 'family']
-#' # c(x, x) # Not working for named vectors due to bug in vctrs
 #' x['b'] <- NA
 #' x[c('c', 'd')] <- 'unknown'
 #' is.na(x)
@@ -603,11 +601,16 @@ c.taxa_taxon <- function(...) {
 }
 
 
-#' Check if is a taxon name
+#' Check if something is a [taxon] object
 #'
-#' Check if an object is the taxon name class
+#' Check if an object is of the [taxon] class
 #'
 #' @param x An object to test
+#'
+#' @examples
+#' x <- taxon(c('A', 'B', 'C'))
+#' is_taxon(x)
+#' is_taxon(1:2)
 #'
 #' @export
 is_taxon <- function(x) {
@@ -665,16 +668,42 @@ as_tibble.taxa_taxon <- function(x, ...) {
 }
 
 
-#' Convert to a taxon vector
+#' Convert to a [taxon] vector
 #'
-#' Convert other objects to taxon vectors
+#' Convert other objects to [taxon] vectors. Compatible base R vectors can also
+#' be converted using the [taxon constructor][taxon].
 #'
 #' @param x An object to be converted to a taxon vector
 #' @param ... Additional parameters.
 #'
+#' @examples
+#'
+#' # Convert a taxonomy object to a taxon vector
+#' x <- taxonomy(taxon(name = c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+#'                              'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+#'                     rank = c('order', 'family', 'genus', 'species',
+#'                              'species', 'family', 'genus', 'species'),
+#'                     id = taxon_id(c('33554', '9681', '9688', '9689',
+#'                                     '9694', '9632', '9639', '9644'),
+#'                                   db = 'ncbi'),
+#'                     auth = c('Bowdich, 1821', 'Fischer de Waldheim, 1817', 'Oken, 1816', 'L., 1758',
+#'                              'L., 1758', 'Fischer de Waldheim, 1817', 'L., 1758', 'L., 1758')),
+#'               supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7))
+#' names(x) <- letters[1:8]
+#' as_taxon(x)
+#'
+#' # Convert base R vectors
+#' as_taxon(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo'))
+#' as_taxon(factor(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo')))
+#'
 #' @export
 as_taxon <- function(x, ...) {
   UseMethod('as_taxon')
+}
+
+#' @export
+as_taxon.default <-  function(x, ...) {
+  taxon(x)
 }
 
 #' @export
@@ -687,10 +716,6 @@ as_taxon.taxa_taxonomy <- function(x, ...) {
   vctrs::field(x, 'taxa')
 }
 
-#' @export
-as_taxon.taxa_classification <- function(x, ...) {
-  do.call(c, lapply(as_taxon(x), `[[`, 1))
-}
 
 #' @export
 c.taxa_taxon <- function(...) {

@@ -1,12 +1,18 @@
-## Test environments
-
-* local ubuntu 16.04, R 3.5.1
-* ubuntu 14.04 (on travis-ci), R 3.5.1
-* win-builder (devel and release)
 
 ## R CMD check results
 
+### Local computer: Pop!_OS 20.04 LTS, R version 4.0.3
+
 0 errors | 0 warnings | 0 notes
+
+### Travis CI: Ubuntu 18.04.5 LTS (devel and release)
+
+0 errors | 0 warnings | 0 notes
+
+### win-builder (devel and release)
+
+0 errors | 0 warnings | 1 notes
+
 
 
 ## Reverse dependencies

@@ -28,11 +28,11 @@ new_taxon_rank <- function(rank = character(), levels = taxon_rank_level()) {
 
 #' Taxon rank class
 #'
-#' \Sexpr[results=rd, stage=render]{taxa:::lifecycle("experimental")}
-#' Used to store taxon ranks, possibly assocaited with a taxonomy database. This is typically used to
-#' store taxon ranks in [taxon()] objects.
+#' \Sexpr[results=rd, stage=render]{taxa:::lifecycle("maturing")}
+#' Used to store taxon ranks, possibly associated with a taxonomy database. This is typically used to
+#' store taxon ranks in [taxon] objects.
 #'
-#' @param rank Zero or more taxonomic rank names. Inputs will be transformed to a `character`
+#' @param rank Zero or more taxonomic rank names. Inputs will be transformed to a [character]
 #'   vector.
 #' @param .names The names of the vector
 #' @param levels A named numeric vector indicating the names and orders of possible taxonomic ranks.
@@ -65,7 +65,6 @@ new_taxon_rank <- function(rank = character(), levels = taxon_rank_level()) {
 #' x[1] <- taxon_rank('order')
 #' x['b']
 #' x['b'] <- 'order'
-#' # c(x, x) # Not working for named vectors due to bug in vctrs
 #'
 #' # Using as columns in tables
 #' tibble::tibble(x = x, y = 1:4)
@@ -443,11 +442,16 @@ Ops.taxa_taxon_rank <- function(e1, e2) {
 # Exported utility functions
 #--------------------------------------------------------------------------------
 
-#' Check if is a taxon rank
+#' Check if something is a [taxon_rank]
 #'
-#' Check if an object is the taxon rank class
+#' Check if an object is of the [taxon_rank] class
 #'
 #' @param x An object to test
+#'
+#' @examples
+#' x <- taxon_rank(c('species', 'species', 'phylum', 'family'))
+#' is_taxon_rank(x)
+#' is_taxon_rank(1:3)
 #'
 #' @export
 is_taxon_rank <- function(x) {

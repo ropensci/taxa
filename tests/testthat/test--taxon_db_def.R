@@ -1,6 +1,14 @@
 context("taxon_db_def")
 library(taxa)
 
+# Printing taxon objects
+
+test_that("database def printing", {
+  verify_output(path = test_path('print_outputs', 'taxon_db_def.txt'),
+                code = {print(db_ref$get())},
+                crayon = TRUE)
+})
+
 
 # `db_ref$get()` returns the correct default
 

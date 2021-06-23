@@ -1,4 +1,3 @@
-
 bibentry("Manual",
   title = "Taxa: An R package implementing data standards and methods for taxonomic data.",
   author = c(person("Foster", "Zachary"), person("Chamberlain", "Scott"), person("Grunwald", "Niklaus")),

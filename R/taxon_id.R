@@ -34,16 +34,15 @@ new_taxon_id <- function(.names = NULL, id = character(), db = taxon_db()) {
 
 #' Taxon ID class
 #'
-#' \Sexpr[results=rd, stage=render]{taxa:::lifecycle("experimental")}
-#' The function used to create `taxon_id` objects and access `taxon_id` objects in other classes
-#' that contain them, such as [taxon()], Used to store taxon IDs, either arbitrary or from a
-#' taxonomy database. This is typically used to store taxon IDs in [taxon()] objects.
+#' \Sexpr[results=rd, stage=render]{taxa:::lifecycle("maturing")}
+#' Used to store the ID corresponding to taxa, either arbitrary or from a
+#' particular taxonomy database. This is typically used to store taxon IDs in
+#' [taxon] objects.
 #'
-#' @param id Zero or more taxonomic ids. Inputs will be transformed to a `character` vector if
+#' @param id Zero or more taxonomic ids. Inputs will be transformed to a [character] vector if
 #'   possible.
 #' @param db The name(s) of the database(s) associated with the IDs. If not `NA` (the default), the
-#'   input must consist of names of databases in [database_ref]. The length must be 0, 1, or equal
-#'   to the number of IDs.
+#'   input must consist of names of databases in [db_ref$get()][db_ref].
 #' @param .names The names that will be applied to the vector.
 #'
 #' @return An `S3` object of class `taxa_taxon_id`
@@ -64,6 +63,7 @@ new_taxon_id <- function(.names = NULL, id = character(), db = taxon_db()) {
 #' x[2:3] <- 'ABC'
 #' x[c('a', 'c')] <- '123'
 #' x[['b']] <- taxon_id('123423', db = 'ncbi')
+#' tax_db(x)
 #' tax_db(x) <- 'nbn'
 #' c(x, x)
 #'
@@ -449,11 +449,16 @@ vec_proxy_equal.taxa_taxon_id <- function(x, ...) {
 # Exported utility functions
 #--------------------------------------------------------------------------------
 
-#' Check if is a taxon id
+#' Check if something is a [taxon_id] object
 #'
-#' Check if an object is the taxon id class
+#' Check if an object is of the [taxon_id] class
 #'
 #' @param x An object to test
+#'
+#' @examples
+#' x <- taxon_id(c('9606', '1386', '4890', '4345'), db = 'ncbi')
+#' is_taxon_id(x)
+#' is_taxon_id(1:3)
 #'
 #' @export
 is_taxon_id <- function(x) {

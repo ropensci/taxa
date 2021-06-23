@@ -36,14 +36,13 @@ new_taxon_authority <- function(.names = NULL, author = character(), date = char
 
 #' Taxon authority class
 #'
-#' \Sexpr[results=rd, stage=render]{taxa:::lifecycle("experimental")} The function used to create
-#' `taxon_authority` objects
+#' \Sexpr[results=rd, stage=render]{taxa:::lifecycle("maturing")} Used to store information on taxon authorities, such as author names, date, and citation.
 #'
 #' @param author Zero or more author names.
 #' @param date Zero or more dates.
 #' @param citation Zero or more literature citations.
 #' @param extract_date If `TRUE` (the default), then if a date is detected in the `author` input and
-#'   no `date` input is given, then the date is seperated from the author input.
+#'   no `date` input is given, then the date is separated from the author input.
 #' @param .names The names of the vector.
 #'
 #' @return An `S3` object of class `taxa_taxon_authority`
@@ -452,11 +451,17 @@ vec_cast.data.frame.taxa_taxon_authority <- function(x, to, ..., x_arg, to_arg) 
 # Exported utility functions
 #--------------------------------------------------------------------------------
 
-#' Check if is a taxon id
+#' Check if is a [taxon_authority]
 #'
-#' Check if an object is the taxon id class
+#' Check if an object is of the [taxon_authority] class
 #'
 #' @param x An object to test
+#'
+#' @examples
+#' x <- taxon_authority(c('Cham. & Schldl.', 'L.'),
+#'                      date = c('1827', '1753'))
+#' is_taxon_authority(x)
+#' is_taxon_authority(1:3)
 #'
 #' @export
 is_taxon_authority <- function(x) {

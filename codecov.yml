@@ -1,0 +1,3 @@
+ignore:
+  - "R/documentation.R"
+  - "R/s3_generics.R"

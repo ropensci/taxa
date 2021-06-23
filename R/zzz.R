@@ -5,13 +5,13 @@
 
 #' All known taxonomic ranks
 #'
-#' A list of taxonomic ranks from all databases used copmbined into a single
+#' A list of taxonomic ranks from all databases used combined into a single
 #' vector to make it easier to maintain the relative order of ranks when data
 #' from multiple databases are combined.
 #'
 #' @section Attribution:
 #'
-#' This list was adapted from a similar one in [taxize].
+#' This list was adapted from a similar one in the `taxize` package.
 #'
 #'
 #' @keywords internal
@@ -221,7 +221,15 @@ default_db_ref <- function(defaults = list()) {
 
 #' Valid taxonomy databases
 #'
-#' This defines the valid taxonomic databases that can be used in `taxa_database` objects as a list of
+#' This defines the valid taxonomic databases that can be used in [taxon_db]
+#' objects and objects that use [taxon_db] objects, such as [taxon_id] and
+#' [taxon]. `db_ref$get` can be used to see information for the databases. Users
+#' can add their own custom databases to the list using `db_ref$set`. For each
+#' database the following information is included:
+#' * The URL for the website associated with the database
+#' * A short description
+#' * The regular expression that defines valid taxon IDs
+#' * The ranks used in the database if specified
 #'
 #' @section Attribution:
 #'

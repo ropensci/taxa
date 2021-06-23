@@ -7,7 +7,7 @@
 #' Minimal taxonomy constructor for internal use. Only use when the input is known to be valid since
 #' few validity checks are done.
 #'
-#' @param taxa A [taxon()] vector.
+#' @param taxa A [taxon] vector.
 #' @param supertaxa The indexes of `taxa` for each taxon's supertaxon.
 #'
 #' @return An `S3` object of class `taxa_taxon`
@@ -29,7 +29,7 @@ new_taxonomy <- function(taxa = taxon(), supertaxa = integer()) {
 #' \Sexpr[results=rd, stage=render]{taxa:::lifecycle("experimental")}
 #' Used to store information about a set of taxa forming a taxonomic tree.
 #'
-#' @param taxa A [taxon()] vector or something that can be converted to a [taxon()] vector.
+#' @param taxa A [taxon] vector or something that can be converted to a [taxon] vector.
 #' @param supertaxa The indexes of `taxa` for each taxon's supertaxon.
 #' @param .names The names of the vector (not the names of taxa).
 #'
@@ -41,8 +41,6 @@ new_taxonomy <- function(taxa = taxon(), supertaxa = integer()) {
 #' x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
 #'                 'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
 #'               supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7))
-#'
-#'
 #'
 #' x <- taxonomy(taxon(name = c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
 #'                              'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
@@ -523,11 +521,18 @@ vec_proxy_equal.taxa_taxonomy <- function(x, ...) {
 # Exported utility functions
 #--------------------------------------------------------------------------------
 
-#' Check if is a taxonomy
+#' Check if something is a [taxonomy]
 #'
-#' Check if an object is the taxonomy class
+#' Check if an object is of the [taxonomy] class
 #'
 #' @param x An object to test
+#'
+#' @examples
+#' x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+#'                 'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+#'               supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7))
+#' is_taxonomy(x)
+#' is_taxonomy(1:2)
 #'
 #' @export
 is_taxonomy <- function(x) {
@@ -539,8 +544,17 @@ is_taxonomy <- function(x) {
 #'
 #' Check if each taxon is a root. A root is a taxon with no supertaxon.
 #'
-#' @param x An object with taxon supertaxon-subtaxa relationships, such as [taxonomy()] objects.
+#' @param x An object containing taxonomic relationships, such as [taxonomy] objects.
 #' @param subset The subset of the tree to search for roots to that subset. Can be indexes or names.
+#'
+#' @family root functions
+#'
+#' @examples
+#' x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+#'                 'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+#'               supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7))
+#' is_root(x)
+#' is_root(x, subset = 2:8)
 #'
 #' @export
 is_root <- function(x, subset = NULL) {
@@ -562,11 +576,21 @@ is_root.taxa_taxonomy <- function(x, subset = NULL) {
 }
 
 
-#' Get root indexes
+#' Get root taxa
 #'
-#' Get the indexs for roots.
+#' Get the indexes of root taxa in a taxonomy.
 #'
 #' @inheritParams is_root
+#'
+#' @family taxonomy functions
+#' @family root functions
+#'
+#' @examples
+#' x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+#'                 'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+#'               supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7))
+#' roots(x)
+#' roots(x, subset = 2:8)
 #'
 #' @export
 roots <- function(x, subset = NULL) {
@@ -583,17 +607,42 @@ roots.taxa_taxonomy <- function(x, subset = NULL) {
 
 #' Get subtaxa
 #'
-#' Get subtaxa indexes for each taxon or another per-taxon value.
+#' Get subtaxa indexes for each taxon or another per-taxon value. Subtaxa are
+#' taxa contained within a taxon.
 #'
-#' @param x The object to get subtaxa for.
-#' @param subset The subset of the tree to search for roots to that subset. Can be indexes or names.
-#' @param max_depth The number of levels to traverse. For example, `max_depth =
+#' @param x The object to get subtaxa for, such as a [taxonomy] object.
+#' @param subset The subset of the tree to search. Can be indexes or names.
+#' @param max_depth The number of ranks to traverse. For example, `max_depth =
 #'   1` returns only immediate subtaxa. By default (NULL) information for all
-#'   subtaxa is returned.
+#'   subtaxa is returned (i.e. subtaxa of subtaxa, etc).
 #' @param include If `TRUE`, include information for each taxon in the output.
 #' @param value Something to return instead of indexes. Must be the same length
 #'   as the number of taxa.
 #' @param ... Additional arguments.
+#'
+#' @family taxonomy functions
+#' @family subtaxa functions
+#'
+#' @examples
+#' # Generate example data
+#' x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+#'                 'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+#'               supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7))
+#'
+#' # The indexes of all subtaxa (with subtaxa of subtaxa, etc) for each taxon
+#' subtaxa(x)
+#'
+#' # The indexes of immediate subtaxa (without subtaxa of subtaxa, etc) for each taxon
+#' subtaxa(x, max_depth = 1)
+#'
+#' # Return something other than index
+#' subtaxa(x, value = tax_name(x))
+#'
+#' # Include each taxon with its subtaxa
+#' subtaxa(x, value = tax_name(x), include = TRUE)
+#'
+#' # Only return data for some taxa (faster than subsetting the whole result)
+#' subtaxa(x, subset = 3)
 #'
 #' @export
 subtaxa <- function(x, subset = NULL, max_depth = NULL, include = FALSE, value = NULL, ...) {
@@ -675,6 +724,23 @@ subtaxa.taxa_taxonomy <- function(x, subset = NULL, max_depth = NULL, include = 
 #'
 #' @inheritParams subtaxa
 #'
+#' @family subtaxa functions
+#'
+#' @examples
+#' # Generate example data
+#' x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+#'                 'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+#'               supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7))
+#'
+#' # Find number of subtaxa (including subtaxa of subtaxa, etc)
+#' n_subtaxa(x)
+#'
+#' # Find the number of subtaxa one rank below each taxon
+#' n_subtaxa(x, max_depth = 1)
+#'
+#' # Only return data for some taxa (faster than subsetting the whole result)
+#' n_subtaxa(x, subset = 1:3)
+#'
 #' @export
 n_subtaxa <- function(x, subset = NULL, max_depth = NULL, include = FALSE) {
   UseMethod('n_subtaxa')
@@ -690,17 +756,42 @@ n_subtaxa.taxa_taxonomy <- function(x, subset = NULL, max_depth = NULL, include 
 
 #' Get supertaxa
 #'
-#' Get supertaxa indexes for each taxon or another per-taxon value.
+#' Get supertaxa indexes for each taxon or another per-taxon value. Supertaxa
+#' are taxa a taxon is contained in.
 #'
-#' @param x The object to get supertaxa for.
-#' @param subset The subset of the tree to search for roots to that subset. Can be indexes or names.
+#' @param x The object to get supertaxa for, such as a [taxonomy] object.
+#' @param subset The subset of the tree to search for roots to that subset. Can
+#'   be indexes or names.
 #' @param max_depth The number of levels to traverse. For example, `max_depth =
 #'   1` returns only immediate supertaxa. By default (NULL) information for all
 #'   supertaxa is returned.
 #' @param include If `TRUE`, include information for each taxon in the output.
-#' @param value Something to return instead of indexes. Must be the same length as the number of taxa.
-#' @param use_na Add a NA to represent the root of the taxonomy (i.e. no supertaxon)
+#' @param value Something to return instead of indexes. Must be the same length
+#'   as the number of taxa.
+#' @param use_na Add a NA to represent the root of the taxonomy (i.e. no
+#'   supertaxon)
 #' @param ... Additional arguments.
+#'
+#' @family taxonomy functions
+#' @family supertaxa functions
+#'
+#' @examples
+#' # Generate example data
+#' x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+#'                 'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+#'               supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7))
+#'
+#' # The indexes of all supertaxa (with supertaxa of supertaxa, etc) for each taxon
+#' supertaxa(x)
+#'
+#' # Return something other than index
+#' supertaxa(x, value = tax_name(x))
+#'
+#' # Include each taxon with its supertaxa
+#' supertaxa(x, value = tax_name(x), include = TRUE)
+#'
+#' # Only return data for some taxa (faster than subsetting the whole result)
+#' supertaxa(x, subset = 3)
 #'
 #' @export
 supertaxa <- function(x, subset = NULL, max_depth = NULL, include = FALSE, value = NULL, use_na = FALSE, ...) {
@@ -748,9 +839,23 @@ supertaxa.taxa_taxonomy <- function(x, subset = NULL, max_depth = NULL, include 
 
 #' Number of supertaxa per taxon
 #'
-#' Get the number of supertaxa per taxon.
+#' Get the number of supertaxa each taxon is contained in.
 #'
 #' @inheritParams supertaxa
+#'
+#' @family supertaxa functions
+#'
+#' @examples
+#' # Generate example data
+#' x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+#'                 'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+#'               supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7))
+#'
+#' # Find number of supertaxa each taxon is contained in
+#' n_supertaxa(x)
+#'
+#' # Only return data for some taxa (faster than subsetting the whole result)
+#' n_supertaxa(x, subset = 1:3)
 #'
 #' @export
 n_supertaxa <- function(x, subset = NULL, max_depth = NULL, include = FALSE) {
@@ -931,9 +1036,20 @@ as_tibble.taxa_taxonomy <- function(x, ...) {
 #'
 #' Get stem indexes for each taxon or another per-taxon value.
 #'
-#' @param x The object to get stems for.
+#' @param x An object with taxonomic relationships, like [taxonomy] objects.
 #' @param value Something to return instead of indexes. Must be the same length as the number of taxa.
 #' @param ... Additional arguments.
+#'
+#' @family taxonomy functions
+#' @family stem functions
+#'
+#' @examples
+#' x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+#'                 'Panthera tigris'),
+#'               supertaxa = c(NA, 1, 2, 3, 3))
+#' x <- c(x, x)
+#' stems(x)
+#' stems(x, value = tax_name(x))
 #'
 #' @export
 stems <- function(x, value = NULL, ...) {
@@ -967,6 +1083,13 @@ stems.taxa_taxonomy <- function(x, value = NULL, ...) {
 #' Check if each taxon is a stem. A stem is any taxa from a root to the first taxon with multiple subtaxa.
 #'
 #' @inheritParams stems
+#' @family stem functions
+#'
+#' @examples
+#' x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+#'                 'Panthera tigris'),
+#'               supertaxa = c(NA, 1, 2, 3, 3))
+#' is_stem(x)
 #'
 #' @export
 is_stem <- function(x) {
@@ -983,11 +1106,21 @@ is_stem.taxa_taxonomy <- function(x) {
 
 #' Get leaves
 #'
-#' Get leaves indexes for each taxon or another per-taxon value.
+#' Get leaves indexes for each taxon or another per-taxon value. Leaves are taxa with no subtaxa.
 #'
-#' @param x The object to get leaves for.
+#' @param x The object to get leaves for, such as a [taxonomy] object
 #' @param value Something to return instead of indexes. Must be the same length as the number of taxa.
 #' @param ... Additional arguments.
+#'
+#' @family taxonomy functions
+#' @family leaf functions
+#'
+#' @examples
+#' x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+#'                 'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+#'               supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7))
+#' leaves(x)
+#' leaves(x, value = tax_name(x))
 #'
 #' @export
 leaves <- function(x, value = NULL, ...) {
@@ -1017,6 +1150,13 @@ leaves.taxa_taxonomy <- function(x, value = NULL, ...) {
 #'
 #' @inheritParams leaves
 #'
+#' @family leaf functions
+#' @examples
+#' x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+#'                 'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+#'               supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7))
+#' is_leaf(x)
+#'
 #' @export
 is_leaf <- function(x) {
   UseMethod('is_leaf')
@@ -1034,6 +1174,13 @@ is_leaf.taxa_taxonomy <- function(x) {
 #' Get the number of leaves per taxon. A leaf is a taxon with no subtaxa.
 #'
 #' @inheritParams leaves
+#' @family leaf functions
+#'
+#' @examples
+#' x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+#'                 'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+#'               supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7))
+#' n_leaves(x)
 #'
 #' @export
 n_leaves <- function(x) {
@@ -1050,10 +1197,21 @@ n_leaves.taxa_taxonomy <- function(x) {
 
 #' Get internodes
 #'
-#' Get internodes indexes for each taxon or another per-taxon value. An internode is a taxon with
-#' exactly one supertaxon and one subtaxon.
+#' Get internodes indexes for each taxon or another per-taxon value. An
+#' internode is a taxon with exactly one supertaxon and one subtaxon. These taxa
+#' can be removed without losing information on the relationships of the
+#' remaining taxa.
 #'
-#' @param x The object to get internodes for.
+#' @param x The object to get internodes for, such as a [taxonomy] object.
+#'
+#' @family taxonomy functions
+#' @family internode functions
+#'
+#' @examples
+#' x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+#'                 'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+#'               supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7))
+#' internodes(x)
 #'
 #' @export
 internodes <- function(x) {
@@ -1069,10 +1227,18 @@ internodes.taxa_taxonomy <- function(x) {
 
 #' Check if taxa are internodes
 #'
-#' Check if each taxon is a internode. An internode is a taxon with exactly one supertaxon and one
-#' subtaxon.
+#' Check if each taxon is an internode. An internode is a taxon with exactly one
+#' supertaxon and one subtaxon. These taxa can be removed without losing
+#' information on the relationships of the remaining taxa.
 #'
 #' @inheritParams internodes
+#'
+#' @family internode functions
+#' @examples
+#' x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+#'                 'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+#'               supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7))
+#' is_internode(x)
 #'
 #' @export
 is_internode <- function(x) {
@@ -1081,7 +1247,7 @@ is_internode <- function(x) {
 
 #' @export
 is_internode.taxa_taxonomy <- function(x) {
-  output <- n_subtaxa(x) == 1 & n_supertaxa(x) == 1
+  output <- n_subtaxa(x, max_depth = 1) == 1 & n_supertaxa(x, max_depth = 1) == 1
   names(output) <- names(x)
   return(output)
 }
@@ -1221,14 +1387,4 @@ duplicated_index_taxonomy <- function(x, proxy_func = NULL) {
   out <- seq_len(length(x))
   out[changes$from] <- changes$to
   return(out)
-}
-
-
-#' @keywords internal
-list_to_taxonomy <- function(x) {
-  class_length <- vapply(x, length, numeric(1))
-  parents <- unlist(lapply(class_length, function(l) c(NA, seq_len(l - 1))))
-  parents <- parents + rep(c(0, cumsum(class_length[-length(class_length)] )), class_length)
-  taxonomy(unlist(x, recursive = FALSE),
-           supertaxa = parents)
 }

@@ -9,10 +9,10 @@
 #' input is known to be valid since few validity checks are done.
 #'
 #' @param level Zero or more taxonomic rank names. If a named numeric is
-#'   appplied, the names are used for levels and the numberic values are used
+#'   applied, the names are used for levels and the numeric values are used
 #'   for the order. Inputs will be transformed to a `character` vector.
-#' @param order Intergers that determine the relative order of taxonomic levels.
-#'   Inputs will be transformed to a `interger` vector. `NA`s can be used to
+#' @param order Integers that determine the relative order of taxonomic levels.
+#'   Inputs will be transformed to a `integer` vector. `NA`s can be used to
 #'   indicate that the order is not known.
 #'
 #' @return An `S3` object of class `taxa_taxon_rank_level`
@@ -366,10 +366,10 @@ c.taxa_taxon_rank_level <- function(...) {
 
 #' Check that order is ascending
 #'
-#' Check that order is ascending and reorder the orders and thier levels if needed.
+#' Check that order is ascending and reorder the orders and their levels if needed.
 #'
 #' @param level Zero or more taxonomic rank names.
-#' @param order Intergers that determine the relative order of taxonomic levels.
+#' @param order Integers that determine the relative order of taxonomic levels.
 #' @param warn If `TRUE`, issue a warning when not in ascending order.
 #'
 #' @keywords internal
