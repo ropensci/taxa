@@ -7,15 +7,36 @@
 n_subtaxa(x, subset = NULL, max_depth = NULL, include = FALSE)
 }
 \arguments{
-\item{x}{The object to get subtaxa for.}
+\item{x}{The object to get subtaxa for, such as a \link{taxonomy} object.}
 
-\item{subset}{The subset of the tree to search for roots to that subset. Can be indexes or names.}
+\item{subset}{The subset of the tree to search. Can be indexes or names.}
 
-\item{max_depth}{The number of levels to traverse. For example, \code{max_depth = 1} returns only immediate subtaxa. By default (NULL) information for all
-subtaxa is returned.}
+\item{max_depth}{The number of ranks to traverse. For example, \code{max_depth = 1} returns only immediate subtaxa. By default (NULL) information for all
+subtaxa is returned (i.e. subtaxa of subtaxa, etc).}
 
 \item{include}{If \code{TRUE}, include information for each taxon in the output.}
 }
 \description{
 Get the number of subtaxa per taxon.
 }
+\examples{
+# Generate example data
+x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+                'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+              supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7))
+
+# Find number of subtaxa (including subtaxa of subtaxa, etc)
+n_subtaxa(x)
+
+# Find the number of subtaxa one rank below each taxon
+n_subtaxa(x, max_depth = 1)
+
+# Only return data for some taxa (faster than subsetting the whole result)
+n_subtaxa(x, subset = 1:3)
+
+}
+\seealso{
+Other subtaxa functions: 
+\code{\link{subtaxa}()}
+}
+\concept{subtaxa functions}

@@ -7,8 +7,21 @@
 n_leaves(x)
 }
 \arguments{
-\item{x}{The object to get leaves for.}
+\item{x}{The object to get leaves for, such as a \link{taxonomy} object}
 }
 \description{
 Get the number of leaves per taxon. A leaf is a taxon with no subtaxa.
 }
+\examples{
+x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+                'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+              supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7))
+n_leaves(x)
+
+}
+\seealso{
+Other leaf functions: 
+\code{\link{is_leaf}()},
+\code{\link{leaves}()}
+}
+\concept{leaf functions}

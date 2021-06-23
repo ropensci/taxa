@@ -193,7 +193,7 @@
 \method{vec_ptype2.factor}{taxa_taxonomy}(x, y, ...)
 }
 \description{
-Functions used internally for coercing taxon objects annd other objects to common data types.
+Functions used internally for coercing taxon objects and other objects to common data types.
 They have to be exported to work, but they are not intended to be directly used by most users.
 }
 \keyword{internal}

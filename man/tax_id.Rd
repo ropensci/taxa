@@ -31,8 +31,19 @@ tax_id(x) <- value
 \arguments{
 \item{x}{An object with taxon IDs.}
 
-\item{value}{The taxon IDs to set. Inputs will be coerced into a \code{\link[=taxon_id]{taxon_id()}} vector.}
+\item{value}{The taxon IDs to set. Inputs will be coerced into a \link{taxon_id} vector.}
 }
 \description{
-Set and get the taxon IDs in objects that have them, such as \code{\link[=taxon]{taxon()}} objects.
+Set and get the taxon IDs in objects that have them, such as \link{taxon} objects.
+}
+\examples{
+x <- taxon(name = c('Homo sapiens', 'Bacillus', 'Ascomycota', 'Ericaceae'),
+           rank = c('species', 'genus', 'phylum', 'family'),
+           id = taxon_id(c('9606', '1386', '4890', '4345'), db = 'ncbi'),
+           auth = c('Linnaeus, 1758', 'Cohn 1872', NA, 'Juss., 1789'))
+
+tax_id(x)
+tax_id(x) <- paste0('00', tax_id(x))
+tax_id(x)[1] <- '00000'
+
 }

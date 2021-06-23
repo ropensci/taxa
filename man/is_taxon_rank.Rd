@@ -2,7 +2,7 @@
 % Please edit documentation in R/taxon_rank.R
 \name{is_taxon_rank}
 \alias{is_taxon_rank}
-\title{Check if is a taxon rank}
+\title{Check if something is a \link{taxon_rank}}
 \usage{
 is_taxon_rank(x)
 }
@@ -10,5 +10,11 @@ is_taxon_rank(x)
 \item{x}{An object to test}
 }
 \description{
-Check if an object is the taxon rank class
+Check if an object is of the \link{taxon_rank} class
+}
+\examples{
+x <- taxon_rank(c('species', 'species', 'phylum', 'family'))
+is_taxon_rank(x)
+is_taxon_rank(1:3)
+
 }

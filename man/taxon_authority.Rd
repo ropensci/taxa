@@ -22,14 +22,13 @@ taxon_authority(
 \item{.names}{The names of the vector.}
 
 \item{extract_date}{If \code{TRUE} (the default), then if a date is detected in the \code{author} input and
-no \code{date} input is given, then the date is seperated from the author input.}
+no \code{date} input is given, then the date is separated from the author input.}
 }
 \value{
 An \code{S3} object of class \code{taxa_taxon_authority}
 }
 \description{
-\Sexpr[results=rd, stage=render]{taxa:::lifecycle("experimental")} The function used to create
-\code{taxon_authority} objects
+\Sexpr[results=rd, stage=render]{taxa:::lifecycle("maturing")} Used to store information on taxon authorities, such as author names, date, and citation.
 }
 \examples{
 

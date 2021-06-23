@@ -31,8 +31,19 @@ tax_rank(x) <- value
 \arguments{
 \item{x}{An object with taxon ranks.}
 
-\item{value}{The taxon ranks to set. Inputs will be coerced into a \code{\link[=taxon_rank]{taxon_rank()}} vector.}
+\item{value}{The taxon ranks to set. Inputs will be coerced into a \link{taxon_rank} vector.}
 }
 \description{
-Set and get the taxon ranks in objects that have them, such as \code{\link[=taxon]{taxon()}} objects.
+Set and get the taxon ranks in objects that have them, such as \link{taxon} objects.
+}
+\examples{
+x <- taxon(name = c('Homo sapiens', 'Bacillus', 'Ascomycota', 'Ericaceae'),
+           rank = c('species', 'genus', 'phylum', 'family'),
+           id = taxon_id(c('9606', '1386', '4890', '4345'), db = 'ncbi'),
+           auth = c('Linnaeus, 1758', 'Cohn 1872', NA, 'Juss., 1789'))
+
+tax_rank(x)
+tax_rank(x) <- 'species'
+tax_rank(x)[1] <- taxon_rank('family')
+
 }

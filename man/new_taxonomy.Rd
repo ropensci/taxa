@@ -7,7 +7,7 @@
 new_taxonomy(taxa = taxon(), supertaxa = integer())
 }
 \arguments{
-\item{taxa}{A \code{\link[=taxon]{taxon()}} vector.}
+\item{taxa}{A \link{taxon} vector.}
 
 \item{supertaxa}{The indexes of \code{taxa} for each taxon's supertaxon.}
 }

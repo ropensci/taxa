@@ -27,9 +27,8 @@ anything else is given.}
 An \code{S3} object of class \code{taxa_taxon}
 }
 \description{
-\Sexpr[results=rd, stage=render]{taxa:::lifecycle("experimental")}
+\Sexpr[results=rd, stage=render]{taxa:::lifecycle("maturing")}
 Used to store information about taxa, such as names, ranks, and IDs.
-For more information on what each class is designed for, see the \link{concepts} section of the help pages.
 }
 \examples{
 
@@ -65,7 +64,6 @@ tax_cite(x)[1] <- 'Linnaeus, C. (1771). Mantissa plantarum altera generum.'
 # Manipulate taxon name vectors
 x[1:3]
 x[tax_rank(x) > 'family']
-# c(x, x) # Not working for named vectors due to bug in vctrs
 x['b'] <- NA
 x[c('c', 'd')] <- 'unknown'
 is.na(x)

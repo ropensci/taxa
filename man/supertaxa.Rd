@@ -15,21 +15,57 @@ supertaxa(
 )
 }
 \arguments{
-\item{x}{The object to get supertaxa for.}
+\item{x}{The object to get supertaxa for, such as a \link{taxonomy} object.}
 
-\item{subset}{The subset of the tree to search for roots to that subset. Can be indexes or names.}
+\item{subset}{The subset of the tree to search for roots to that subset. Can
+be indexes or names.}
 
 \item{max_depth}{The number of levels to traverse. For example, \code{max_depth = 1} returns only immediate supertaxa. By default (NULL) information for all
 supertaxa is returned.}
 
 \item{include}{If \code{TRUE}, include information for each taxon in the output.}
 
-\item{value}{Something to return instead of indexes. Must be the same length as the number of taxa.}
+\item{value}{Something to return instead of indexes. Must be the same length
+as the number of taxa.}
 
-\item{use_na}{Add a NA to represent the root of the taxonomy (i.e. no supertaxon)}
+\item{use_na}{Add a NA to represent the root of the taxonomy (i.e. no
+supertaxon)}
 
 \item{...}{Additional arguments.}
 }
 \description{
-Get supertaxa indexes for each taxon or another per-taxon value.
+Get supertaxa indexes for each taxon or another per-taxon value. Supertaxa
+are taxa a taxon is contained in.
 }
+\examples{
+# Generate example data
+x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+                'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+              supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7))
+
+# The indexes of all supertaxa (with supertaxa of supertaxa, etc) for each taxon
+supertaxa(x)
+
+# Return something other than index
+supertaxa(x, value = tax_name(x))
+
+# Include each taxon with its supertaxa
+supertaxa(x, value = tax_name(x), include = TRUE)
+
+# Only return data for some taxa (faster than subsetting the whole result)
+supertaxa(x, subset = 3)
+
+}
+\seealso{
+Other taxonomy functions: 
+\code{\link{internodes}()},
+\code{\link{leaves}()},
+\code{\link{roots}()},
+\code{\link{stems}()},
+\code{\link{subtaxa}()}
+
+Other supertaxa functions: 
+\code{\link{n_supertaxa}()}
+}
+\concept{supertaxa functions}
+\concept{taxonomy functions}

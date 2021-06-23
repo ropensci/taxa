@@ -1,0 +1,6 @@
+> print(x)
+<taxon_rank[6]>
+      a       b       c       d       e       f 
+[34mspecies[39m [34mspecies[39m  [90mphylum[39m  [36mfamily[39m [90mcustomA[39m [90mcustomB[39m 
+Rank levels: [90mphylum[39m [90m<[39m [36mfamily[39m [90m<[39m [34mspecies[39m[90m ? [39mcustomA[90m ? [39mcustomB
+

@@ -2,7 +2,7 @@
 % Please edit documentation in R/taxon_authority.R
 \name{is_taxon_authority}
 \alias{is_taxon_authority}
-\title{Check if is a taxon id}
+\title{Check if is a \link{taxon_authority}}
 \usage{
 is_taxon_authority(x)
 }
@@ -10,5 +10,12 @@ is_taxon_authority(x)
 \item{x}{An object to test}
 }
 \description{
-Check if an object is the taxon id class
+Check if an object is of the \link{taxon_authority} class
+}
+\examples{
+x <- taxon_authority(c('Cham. & Schldl.', 'L.'),
+                     date = c('1827', '1753'))
+is_taxon_authority(x)
+is_taxon_authority(1:3)
+
 }

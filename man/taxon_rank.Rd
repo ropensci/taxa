@@ -12,7 +12,7 @@ taxon_rank(
 )
 }
 \arguments{
-\item{rank}{Zero or more taxonomic rank names. Inputs will be transformed to a \code{character}
+\item{rank}{Zero or more taxonomic rank names. Inputs will be transformed to a \link{character}
 vector.}
 
 \item{.names}{The names of the vector}
@@ -28,9 +28,9 @@ on rank names.}
 An \code{S3} object of class \code{taxa_taxon_rank}
 }
 \description{
-\Sexpr[results=rd, stage=render]{taxa:::lifecycle("experimental")}
-Used to store taxon ranks, possibly assocaited with a taxonomy database. This is typically used to
-store taxon ranks in \code{\link[=taxon]{taxon()}} objects.
+\Sexpr[results=rd, stage=render]{taxa:::lifecycle("maturing")}
+Used to store taxon ranks, possibly associated with a taxonomy database. This is typically used to
+store taxon ranks in \link{taxon} objects.
 }
 \examples{
 
@@ -53,7 +53,6 @@ x[x > 'family'] <- taxon_rank('unknown')
 x[1] <- taxon_rank('order')
 x['b']
 x['b'] <- 'order'
-# c(x, x) # Not working for named vectors due to bug in vctrs
 
 # Using as columns in tables
 tibble::tibble(x = x, y = 1:4)

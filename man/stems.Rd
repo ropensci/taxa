@@ -7,7 +7,7 @@
 stems(x, value = NULL, ...)
 }
 \arguments{
-\item{x}{The object to get stems for.}
+\item{x}{An object with taxonomic relationships, like \link{taxonomy} objects.}
 
 \item{value}{Something to return instead of indexes. Must be the same length as the number of taxa.}
 
@@ -16,3 +16,25 @@ stems(x, value = NULL, ...)
 \description{
 Get stem indexes for each taxon or another per-taxon value.
 }
+\examples{
+x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+                'Panthera tigris'),
+              supertaxa = c(NA, 1, 2, 3, 3))
+x <- c(x, x)
+stems(x)
+stems(x, value = tax_name(x))
+
+}
+\seealso{
+Other taxonomy functions: 
+\code{\link{internodes}()},
+\code{\link{leaves}()},
+\code{\link{roots}()},
+\code{\link{subtaxa}()},
+\code{\link{supertaxa}()}
+
+Other stem functions: 
+\code{\link{is_stem}()}
+}
+\concept{stem functions}
+\concept{taxonomy functions}

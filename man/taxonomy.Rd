@@ -25,7 +25,7 @@ taxonomy(taxa = taxon(), supertaxa = NA, .names = NULL)
 \method{[[}{taxa_taxonomy}(x, i, ..., subtaxa = TRUE, supertaxa = FALSE, invert = FALSE)
 }
 \arguments{
-\item{taxa}{A \code{\link[=taxon]{taxon()}} vector or something that can be converted to a \code{\link[=taxon]{taxon()}} vector.}
+\item{taxa}{A \link{taxon} vector or something that can be converted to a \link{taxon} vector.}
 
 \item{supertaxa}{The indexes of \code{taxa} for each taxon's supertaxon.}
 
@@ -43,8 +43,6 @@ Used to store information about a set of taxa forming a taxonomic tree.
 x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
                 'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
               supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7))
-
-
 
 x <- taxonomy(taxon(name = c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
                              'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),

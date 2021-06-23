@@ -37,8 +37,16 @@ tax_author(x) <- value
 \arguments{
 \item{x}{An object with taxon authors.}
 
-\item{value}{The taxon authors to set. Inputs will be coerced into a \code{\link[=character]{character()}} vector.}
+\item{value}{The taxon authors to set. Inputs will be coerced into a \link{character} vector.}
 }
 \description{
-Set and get taxon authors in objects that have them, such as \code{\link[=taxon_authority]{taxon_authority()}} objects.
+Set and get taxon authors in objects that have them, such as \link{taxon_authority} objects.
+}
+\examples{
+x <- taxon_authority(c('Cham. & Schldl.', 'L.'),
+                     date = c('1827', '1753'))
+tax_author(x)
+tax_author(x)[1] <- "Billy"
+tax_author(x) <- tolower(tax_author(x))
+
 }

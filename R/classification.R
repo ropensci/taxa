@@ -27,9 +27,7 @@ new_classification <- function(taxonomy = taxonomy(), instances = integer()) {
 #' Taxon class
 #'
 #' \Sexpr[results=rd, stage=render]{taxa:::lifecycle("experimental")} Used to
-#' store classifications in reference to a taxonomic tree. For more information
-#' on what each class is designed for, see the [concepts] section of the help
-#' pages.
+#' store classifications in reference to a taxonomic tree.
 #'
 #' @param x One of:
 #' * A list where each item represents a series of nested taxa. The contents of
@@ -69,8 +67,10 @@ new_classification <- function(taxonomy = taxonomy(), instances = integer()) {
 #'                                    id = taxon_id(c('33554', '9681', '9688', '9689',
 #'                                                    '9694', '9632', '9639', '9644'),
 #'                                                  db = 'ncbi'),
-#'                                    auth = c('Bowdich, 1821', 'Fischer, 1817', 'Oken, 1816', 'L., 1758',
-#'                                             'L., 1758', 'Fischer, 1817', 'L., 1758', 'L., 1758')),
+#'                                    auth = c('Bowdich, 1821', 'Fischer, 1817',
+#'                                             'Oken, 1816', 'L., 1758',
+#'                                             'L., 1758', 'Fischer, 1817',
+#'                                             'L., 1758', 'L., 1758')),
 #'                              supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7)))
 #' names(x) <- letters[1:12]
 #'
@@ -89,7 +89,7 @@ new_classification <- function(taxonomy = taxonomy(), instances = integer()) {
 #' x[1:3]
 #' x[tax_rank(x) > 'family']
 #' # c(x, x)
-#' x['b'] <- NA
+#' # x['b'] <- NA
 #' is.na(x)
 #' # as.data.frame(x)
 #' # tibble::as_tibble(x)

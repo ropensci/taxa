@@ -7,8 +7,20 @@
 is_stem(x)
 }
 \arguments{
-\item{x}{The object to get stems for.}
+\item{x}{An object with taxonomic relationships, like \link{taxonomy} objects.}
 }
 \description{
 Check if each taxon is a stem. A stem is any taxa from a root to the first taxon with multiple subtaxa.
 }
+\examples{
+x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+                'Panthera tigris'),
+              supertaxa = c(NA, 1, 2, 3, 3))
+is_stem(x)
+
+}
+\seealso{
+Other stem functions: 
+\code{\link{stems}()}
+}
+\concept{stem functions}

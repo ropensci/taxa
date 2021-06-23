@@ -37,8 +37,16 @@ tax_date(x) <- value
 \arguments{
 \item{x}{An object with taxon authority dates.}
 
-\item{value}{The taxon authority dates to set. Inputs will be coerced into a \code{\link[=character]{character()}} vector.}
+\item{value}{The taxon authority dates to set. Inputs will be coerced into a \link{character} vector.}
 }
 \description{
-Set and get the taxon authority dates in objects that have them, such as \code{\link[=taxon_authority]{taxon_authority()}} objects.
+Set and get the taxon authority dates in objects that have them, such as \link{taxon_authority} objects.
+}
+\examples{
+x <- taxon_authority(c('Cham. & Schldl.', 'L.'),
+                     date = c('1827', '1753'))
+tax_date(x)
+tax_date(x)[1] <- "1984"
+tax_date(x) <- c(NA, '1800')
+
 }

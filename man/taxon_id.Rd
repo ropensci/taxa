@@ -7,12 +7,11 @@
 taxon_id(id = character(), db = NA, .names = NULL)
 }
 \arguments{
-\item{id}{Zero or more taxonomic ids. Inputs will be transformed to a \code{character} vector if
+\item{id}{Zero or more taxonomic ids. Inputs will be transformed to a \link{character} vector if
 possible.}
 
 \item{db}{The name(s) of the database(s) associated with the IDs. If not \code{NA} (the default), the
-input must consist of names of databases in \link{database_ref}. The length must be 0, 1, or equal
-to the number of IDs.}
+input must consist of names of databases in \link[=db_ref]{db_ref$get()}.}
 
 \item{.names}{The names that will be applied to the vector.}
 }
@@ -20,10 +19,10 @@ to the number of IDs.}
 An \code{S3} object of class \code{taxa_taxon_id}
 }
 \description{
-\Sexpr[results=rd, stage=render]{taxa:::lifecycle("experimental")}
-The function used to create \code{taxon_id} objects and access \code{taxon_id} objects in other classes
-that contain them, such as \code{\link[=taxon]{taxon()}}, Used to store taxon IDs, either arbitrary or from a
-taxonomy database. This is typically used to store taxon IDs in \code{\link[=taxon]{taxon()}} objects.
+\Sexpr[results=rd, stage=render]{taxa:::lifecycle("maturing")}
+Used to store the ID corresponding to taxa, either arbitrary or from a
+particular taxonomy database. This is typically used to store taxon IDs in
+\link{taxon} objects.
 }
 \examples{
 
@@ -40,6 +39,7 @@ x[2:3]
 x[2:3] <- 'ABC'
 x[c('a', 'c')] <- '123'
 x[['b']] <- taxon_id('123423', db = 'ncbi')
+tax_db(x)
 tax_db(x) <- 'nbn'
 c(x, x)
 

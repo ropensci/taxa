@@ -31,10 +31,21 @@ tax_auth(x) <- value
 \arguments{
 \item{x}{An object with taxon authorities.}
 
-\item{value}{The taxon IDs to set. Inputs will be coerced into a \code{\link[=taxon_id]{taxon_id()}} vector.}
+\item{value}{The taxon IDs to set. Inputs will be coerced into a \link{taxon_id} vector.}
 }
 \description{
-Set and get the taxon authorities in objects that have them, such as \code{\link[=taxon]{taxon()}} objects.
+Set and get the taxon authorities in objects that have them, such as \link{taxon} objects.
 Note that this sets all the authority information, such as author name, date, and citations.
-To set or get just one of part of the authorities, use \code{\link[=tax_author]{tax_author()}}, \code{\link[=tax_date]{tax_date()}}, or \code{\link[=tax_cite]{tax_cite()}} instead.
+To set or get just one of part of the authorities, use \link{tax_author}, \link{tax_date}, or \link{tax_cite} instead.
+}
+\examples{
+x <- taxon(name = c('Homo sapiens', 'Bacillus', 'Ascomycota', 'Ericaceae'),
+           rank = c('species', 'genus', 'phylum', 'family'),
+           id = taxon_id(c('9606', '1386', '4890', '4345'), db = 'ncbi'),
+           auth = c('Linnaeus, 1758', 'Cohn 1872', NA, 'Juss., 1789'))
+
+tax_auth(x)
+tax_auth(x) <- tolower(tax_auth(x))
+tax_auth(x)[1] <- 'Billy'
+
 }

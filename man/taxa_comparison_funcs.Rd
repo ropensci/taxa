@@ -9,7 +9,7 @@
 \alias{vec_proxy_equal.taxa_taxon_rank}
 \alias{Ops.taxa_taxon_rank}
 \alias{vec_proxy_equal.taxa_taxonomy}
-\title{taxa comparision functions}
+\title{taxa comparison functions}
 \usage{
 \method{vec_proxy_equal}{taxa_taxon}(x, ...)
 

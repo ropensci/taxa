@@ -1,0 +1,6 @@
+> print(data.frame(x))
+                     x
+1 Cham. & Schldl. 1827
+2              L. 1753
+3           Billy 2000
+

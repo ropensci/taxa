@@ -8,11 +8,11 @@ new_taxon_rank_level(level = character(), order = numeric())
 }
 \arguments{
 \item{level}{Zero or more taxonomic rank names. If a named numeric is
-appplied, the names are used for levels and the numberic values are used
+applied, the names are used for levels and the numeric values are used
 for the order. Inputs will be transformed to a \code{character} vector.}
 
-\item{order}{Intergers that determine the relative order of taxonomic levels.
-Inputs will be transformed to a \code{interger} vector. \code{NA}s can be used to
+\item{order}{Integers that determine the relative order of taxonomic levels.
+Inputs will be transformed to a \code{integer} vector. \code{NA}s can be used to
 indicate that the order is not known.}
 }
 \value{

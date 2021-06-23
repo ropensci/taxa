@@ -37,8 +37,16 @@ tax_cite(x) <- value
 \arguments{
 \item{x}{An object with taxon authority dates.}
 
-\item{value}{The taxon citations to set. Inputs will be coerced into a \code{\link[=taxon_authority]{taxon_authority()}} vector.}
+\item{value}{The taxon citations to set. Inputs will be coerced into a \link{taxon_authority} vector.}
 }
 \description{
-Set and get the taxon authority citations in objects that have them, such as \code{\link[=taxon_authority]{taxon_authority()}} objects.
+Set and get the taxon authority citations in objects that have them, such as \link{taxon_authority} objects.
+}
+\examples{
+x <- taxon_authority(c('Cham. & Schldl.', 'L.'),
+                     date = c('1827', '1753'),
+                     citation = c(NA, 'Species Plantarum'))
+tax_cite(x)
+tax_cite(x)[1] <- "Cham. et al 1984"
+
 }

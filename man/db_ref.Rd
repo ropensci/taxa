@@ -11,7 +11,17 @@ An object of class \code{list} of length 3.
 db_ref
 }
 \description{
-This defines the valid taxonomic databases that can be used in \code{taxa_database} objects as a list of
+This defines the valid taxonomic databases that can be used in \link{taxon_db}
+objects and objects that use \link{taxon_db} objects, such as \link{taxon_id} and
+\link{taxon}. \code{db_ref$get} can be used to see information for the databases. Users
+can add their own custom databases to the list using \code{db_ref$set}. For each
+database the following information is included:
+\itemize{
+\item The URL for the website associated with the database
+\item A short description
+\item The regular expression that defines valid taxon IDs
+\item The ranks used in the database if specified
+}
 }
 \section{Attribution}{
 

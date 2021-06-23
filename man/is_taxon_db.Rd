@@ -2,7 +2,7 @@
 % Please edit documentation in R/taxon_db.R
 \name{is_taxon_db}
 \alias{is_taxon_db}
-\title{Check if is a taxond database}
+\title{Check if something is a \link{taxon_db}}
 \usage{
 is_taxon_db(x)
 }
@@ -10,5 +10,11 @@ is_taxon_db(x)
 \item{x}{An object to test}
 }
 \description{
-Check if an object is a taxon database class
+Check if an object is of the \link{taxon_db} class
+}
+\examples{
+x <- taxon_db(c('ncbi', 'ncbi', 'itis'))
+is_taxon_db(x)
+is_taxon_db(1:3)
+
 }

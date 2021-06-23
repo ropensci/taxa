@@ -7,9 +7,31 @@
 internodes(x)
 }
 \arguments{
-\item{x}{The object to get internodes for.}
+\item{x}{The object to get internodes for, such as a \link{taxonomy} object.}
 }
 \description{
-Get internodes indexes for each taxon or another per-taxon value. An internode is a taxon with
-exactly one supertaxon and one subtaxon.
+Get internodes indexes for each taxon or another per-taxon value. An
+internode is a taxon with exactly one supertaxon and one subtaxon. These taxa
+can be removed without losing information on the relationships of the
+remaining taxa.
 }
+\examples{
+x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+                'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+              supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7))
+internodes(x)
+
+}
+\seealso{
+Other taxonomy functions: 
+\code{\link{leaves}()},
+\code{\link{roots}()},
+\code{\link{stems}()},
+\code{\link{subtaxa}()},
+\code{\link{supertaxa}()}
+
+Other internode functions: 
+\code{\link{is_internode}()}
+}
+\concept{internode functions}
+\concept{taxonomy functions}

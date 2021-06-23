@@ -7,9 +7,10 @@
 n_supertaxa(x, subset = NULL, max_depth = NULL, include = FALSE)
 }
 \arguments{
-\item{x}{The object to get supertaxa for.}
+\item{x}{The object to get supertaxa for, such as a \link{taxonomy} object.}
 
-\item{subset}{The subset of the tree to search for roots to that subset. Can be indexes or names.}
+\item{subset}{The subset of the tree to search for roots to that subset. Can
+be indexes or names.}
 
 \item{max_depth}{The number of levels to traverse. For example, \code{max_depth = 1} returns only immediate supertaxa. By default (NULL) information for all
 supertaxa is returned.}
@@ -17,5 +18,23 @@ supertaxa is returned.}
 \item{include}{If \code{TRUE}, include information for each taxon in the output.}
 }
 \description{
-Get the number of supertaxa per taxon.
+Get the number of supertaxa each taxon is contained in.
 }
+\examples{
+# Generate example data
+x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+                'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+              supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7))
+
+# Find number of supertaxa each taxon is contained in
+n_supertaxa(x)
+
+# Only return data for some taxa (faster than subsetting the whole result)
+n_supertaxa(x, subset = 1:3)
+
+}
+\seealso{
+Other supertaxa functions: 
+\code{\link{supertaxa}()}
+}
+\concept{supertaxa functions}

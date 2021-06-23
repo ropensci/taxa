@@ -31,9 +31,20 @@ tax_name(x) <- value
 \arguments{
 \item{x}{An object with taxon names.}
 
-\item{value}{The taxon names to set. Inputs will be coerced into a \code{\link[=character]{character()}} vector.}
+\item{value}{The taxon names to set. Inputs will be coerced into a \link{character} vector.}
 }
 \description{
-Set and get the taxon names in objects that have them, such as \code{\link[=taxon]{taxon()}} objects.
-Note that this is not the same as adding vector names with \code{\link[=names]{names()}}.
+Set and get the taxon names in objects that have them, such as \link{taxon} objects.
+Note that this is not the same as adding vector names with \link{names}.
+}
+\examples{
+x <- taxon(name = c('Homo sapiens', 'Bacillus', 'Ascomycota', 'Ericaceae'),
+           rank = c('species', 'genus', 'phylum', 'family'),
+           id = taxon_id(c('9606', '1386', '4890', '4345'), db = 'ncbi'),
+           auth = c('Linnaeus, 1758', 'Cohn 1872', NA, 'Juss., 1789'))
+
+tax_name(x)
+tax_name(x) <- tolower(tax_name(x))
+tax_name(x)[1] <- 'Billy'
+
 }

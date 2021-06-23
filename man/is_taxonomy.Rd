@@ -2,7 +2,7 @@
 % Please edit documentation in R/taxonomy.R
 \name{is_taxonomy}
 \alias{is_taxonomy}
-\title{Check if is a taxonomy}
+\title{Check if something is a \link{taxonomy}}
 \usage{
 is_taxonomy(x)
 }
@@ -10,5 +10,13 @@ is_taxonomy(x)
 \item{x}{An object to test}
 }
 \description{
-Check if an object is the taxonomy class
+Check if an object is of the \link{taxonomy} class
+}
+\examples{
+x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+                'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+              supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7))
+is_taxonomy(x)
+is_taxonomy(1:2)
+
 }

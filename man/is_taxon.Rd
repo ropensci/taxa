@@ -2,7 +2,7 @@
 % Please edit documentation in R/taxon.R
 \name{is_taxon}
 \alias{is_taxon}
-\title{Check if is a taxon name}
+\title{Check if something is a \link{taxon} object}
 \usage{
 is_taxon(x)
 }
@@ -10,5 +10,11 @@ is_taxon(x)
 \item{x}{An object to test}
 }
 \description{
-Check if an object is the taxon name class
+Check if an object is of the \link{taxon} class
+}
+\examples{
+x <- taxon(c('A', 'B', 'C'))
+is_taxon(x)
+is_taxon(1:2)
+
 }

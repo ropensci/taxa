@@ -2,7 +2,7 @@
 % Please edit documentation in R/printing_style.R
 \name{interleave}
 \alias{interleave}
-\title{Interleves two vectors}
+\title{Interleaves two vectors}
 \usage{
 interleave(v1, v2)
 }

@@ -7,9 +7,22 @@
 is_leaf(x)
 }
 \arguments{
-\item{x}{The object to get leaves for.}
+\item{x}{The object to get leaves for, such as a \link{taxonomy} object}
 }
 \description{
 Check if each taxon is a leaf. A leaf is a taxon with no subtaxa.
 subtaxa.
 }
+\examples{
+x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+                'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+              supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7))
+is_leaf(x)
+
+}
+\seealso{
+Other leaf functions: 
+\code{\link{leaves}()},
+\code{\link{n_leaves}()}
+}
+\concept{leaf functions}

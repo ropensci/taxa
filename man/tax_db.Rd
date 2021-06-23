@@ -37,8 +37,15 @@ tax_db(x) <- value
 \arguments{
 \item{x}{An object with taxon authority dates.}
 
-\item{value}{The taxon citations to set. Inputs will be coerced into a \code{\link[=taxon_db]{taxon_db()}} vector.}
+\item{value}{The taxon citations to set. Inputs will be coerced into a \link{taxon_db} vector.}
 }
 \description{
-Set and get the taxon ID databases in objects that have them, such as \code{\link[=taxon_id]{taxon_id()}} objects.
+Set and get the taxon ID databases in objects that have them, such as \link{taxon_id} objects.
+}
+\examples{
+x <- taxon_id(c('9606', '1386', '4890', '4345'), db = 'ncbi')
+tax_db(x)
+tax_db(x) <- 'nbn'
+tax_db(x)[2] <- 'itis'
+
 }

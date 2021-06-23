@@ -2,7 +2,7 @@
 % Please edit documentation in R/s3_generics.R
 \name{as_data_frame}
 \alias{as_data_frame}
-\title{Coerce taxa objects to a Data Frame}
+\title{Convert a taxa object to a \code{data.frame}}
 \usage{
 as_data_frame(
   x,
@@ -13,7 +13,7 @@ as_data_frame(
 )
 }
 \arguments{
-\item{x}{any \R object.}
+\item{x}{An object defined by taxa, such as \link{taxon} or \link{taxon_id}}
 
 \item{row.names}{\code{NULL} or a character vector giving the row
     names for the data frame.  Missing values are not allowed.}
@@ -32,5 +32,14 @@ as_data_frame(
     to a factor?}
 }
 \description{
-Convert taxa objects to data.frames.
+Convert the information in a taxa object to a \code{data.frame} using base R
+vectors as columns. Use \link{as_tibble} to convert to tibbles.
+}
+\examples{
+x <- taxon(name = c('Homo sapiens', 'Bacillus', 'Ascomycota', 'Ericaceae'),
+           rank = c('species', 'genus', 'phylum', 'family'),
+           id = taxon_id(c('9606', '1386', '4890', '4345'), db = 'ncbi'),
+           auth = c('Linnaeus, 1758', 'Cohn 1872', NA, 'Juss., 1789'))
+as_data_frame(x)
+
 }

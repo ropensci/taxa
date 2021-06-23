@@ -11,14 +11,14 @@ An object of class \code{numeric} of length 52.
 rank_ref
 }
 \description{
-A list of taxonomic ranks from all databases used copmbined into a single
+A list of taxonomic ranks from all databases used combined into a single
 vector to make it easier to maintain the relative order of ranks when data
 from multiple databases are combined.
 }
 \section{Attribution}{
 
 
-This list was adapted from a similar one in \link{taxize}.
+This list was adapted from a similar one in the \code{taxize} package.
 }
 
 \keyword{internal}

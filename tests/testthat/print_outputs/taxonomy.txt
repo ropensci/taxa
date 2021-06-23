@@ -1,0 +1,12 @@
+> print(x)
+<taxonomy[8]>
+1[90m[[39ma[90m][39m[90m: [39m[90m33554[39m[90m|[39mCarnivora [90mBowdich 1821[39m[90m|[39m[90morder[39m
++-2[90m[[39mb[90m][39m[90m: [39m[90m9681[39m[90m|[39mFelidae [90mFischer de Waldheim 1817[39m[90m|[39m[36mfamily[39m
+| \-3[90m[[39mc[90m][39m[90m: [39m[90m9688[39m[90m|[39m[3mPanthera[23m [90mOken 1816[39m[90m|[39m[34mgenus[39m
+|   +-4[90m[[39md[90m][39m[90m: [39m[90m9689[39m[90m|[39m[3mPanthera leo[23m [90mL. 1758[39m[90m|[39m[34mspecies[39m
+|   \-5[90m[[39me[90m][39m[90m: [39m[90m9694[39m[90m|[39m[3mPanthera tigris[23m [90mL. 1758[39m[90m|[39m[34mspecies[39m
+\-6[90m[[39mf[90m][39m[90m: [39m[90m9632[39m[90m|[39mUrsidae [90mFischer de Waldheim 1817[39m[90m|[39m[36mfamily[39m
+  \-7[90m[[39mg[90m][39m[90m: [39m[90m9639[39m[90m|[39m[3mUrsus[23m [90mL. 1758[39m[90m|[39m[34mgenus[39m
+    \-8[90m[[39mh[90m][39m[90m: [39m[90m9644[39m[90m|[39m[3mUrsus arctos[23m [90mL. 1758[39m[90m|[39m[34mspecies[39m
+Rank levels: [90morder[39m [90m<[39m [36mfamily[39m [90m<[39m [34mgenus[39m [90m<[39m [34mspecies[39m
+
