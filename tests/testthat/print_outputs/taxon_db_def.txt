@@ -1,0 +1,50 @@
+> print(db_ref$get())
+<taxon_db_def[8]>
+   _____________________ ncbi ______________________
+   url:         http://www.ncbi.nlm.nih.gov/taxonomy
+   desc:        NCBI Taxonomy Database              
+   id_regex:    [0-9]+                              
+   rank_levels:                                     
+
+   _____________________________ gbif _____________________________
+   url:         http://www.gbif.org/developer/species              
+   desc:        GBIF Taxonomic Backbone                            
+   id_regex:    [0-9]+                                             
+   rank_levels: kingdom < phylum < order < family < genus < species
+
+   _________________________________ bold _________________________________
+   url:         http://www.boldsystems.org                                 
+   desc:        Barcode of Life                                            
+   id_regex:    [0-9]+                                                     
+   rank_levels: phylum < class < order < family < subfamily < genus < spec…
+
+   ___________________ col ___________________
+   url:         http://www.catalogueoflife.org
+   desc:        Catalogue of Life             
+   id_regex:    [a-z0-9]{32}                  
+   rank_levels:                               
+
+   ______________ eol ______________
+   url:         http://eol.org      
+   desc:        Encyclopedia of Life
+   id_regex:    [0-9]+              
+   rank_levels:                     
+
+   ____________________ nbn ____________________
+   url:         https://nbn.org.uk              
+   desc:        UK National Biodiversity Network
+   id_regex:    [A-Z]{5}[0-9]{10}               
+   rank_levels:                                 
+
+   ________________ tps ________________
+   url:         http://www.tropicos.org/
+   desc:        Tropicos                
+   id_regex:    [0-9]+                  
+   rank_levels:                         
+
+   _______________________ itis _______________________
+   url:         http://www.itis.gov                    
+   desc:        Integrated Taxonomic Information System
+   id_regex:    [0-9]+                                 
+   rank_levels:                                        
+

@@ -1,0 +1,156 @@
+
+```{r echo = FALSE}
+options(max.print = 100, width = 100)
+```
+
+
+```{r eval = FALSE}
+# devtools::install_github("ropensci/taxa", ref = "vectorize")
+```
+
+```{r}
+library(taxa)
+```
+
+
+I used the `vctrs` package to try out making S3 vector-like versions of classes to hold taxon databases and taxon id.
+If this works out, I would like to do the same for taxon names, ranks, and taxa as a whole, which would include the ids, names, and ranks.
+The ids, names, and ranks each can hold their own database ID.
+
+## taxon_db 
+
+The `taxon_db` class is just a character vector of database names with extra validity checks to make sure that names are valid.
+
+```{r}
+taxon_db()
+taxon_db('ncbi')
+taxon_db(rep('itis', 100))
+taxon_db(rep('itis', 2000))
+```
+
+The acceptable databases are stored in `database_definitions` in the same way knitr chunk options are stored and changed.
+
+```{r}
+database_definitions$get()
+```
+
+All names in `taxon_db` objects must be in this list or errors are thrown:
+
+```{r error=TRUE}
+taxon_db(c('ncbi', 'itis', 'custom', 'tps'))
+```
+
+This also happens on assigning values:
+
+```{r error=TRUE}
+x = taxon_db(rep('itis', 10))
+x
+x[2:3] <- "ncbi"
+x
+x[2:3] <- "custom"
+```
+
+However, you can add new databases to the list:
+
+```{r}
+database_definitions$set(
+  name = "custom",
+  url = "http://www.my_tax_database.com",
+  description = "I just made this up",
+  id_regex = ".*"
+)
+```
+
+And then you can use that name too:
+
+```{r}
+x[2:3] <- "custom"
+x
+```
+
+
+## taxon_id
+
+The `taxon_id` class stores taxon IDs and their associated database (as a `taxon_db` vector).
+
+```{r}
+taxon_id()
+taxon_id(1:10)
+taxon_id(1:10, db = 'ncbi')
+taxon_id(1:10000, db = 'itis')
+```
+
+> Run code in an R console to see colored output. I forgot how to make it work in Rmarkdown.
+
+Since a `taxon_db` object is used, database names must be valid:
+
+```{r error=TRUE}
+taxon_id(1:10, db = 'custom2')
+```
+
+The database values can be accessed and set with `taxon_db`:
+
+```{r}
+x <- taxon_id(1:10, db = 'ncbi')
+x
+taxon_db(x)
+taxon_db(x) <- 'itis'
+x
+taxon_db(x)[1:3] <- 'tps'
+x
+```
+
+... if they are valid:
+
+```{r error=TRUE}
+taxon_db(x)[1:3] <- 'custom2'
+```
+
+If a database is defined, then the ids must match the ID regex for that database in `database_definitions$get()`:
+
+```{r error=TRUE}
+taxon_id(letters[1:3], c('ncbi', 'itis', 'itis'))
+taxon_id(letters[1:3])
+```
+
+You can set taxon id values with numbers or characters, but only `taxon_id` inputs can supply a defined database.
+
+```{r error=TRUE}
+x <- taxon_id(1:10, db = 'ncbi')
+x
+x[3:4] <- 1
+x[6:7] <- c("a", "b")
+x[8:9] <- taxon_id(1, db = c('itis', 'tps'))
+x
+```
+
+
+## Use in tables
+
+The `taxon_id` prints well in `data.frame`s and `tibble`s, using color when possible:
+
+```{r}
+data.frame(x = taxon_id(1:10, "ncbi"), y = taxon_db(rep("itis", 10)), z = 1:10)
+tibble::tibble(x = taxon_id(1:10, "ncbi"), y = taxon_db(rep("itis", 10)), z = 1:10)
+str(taxon_id(1:10, 'ncbi'))
+```
+
+
+## Plans for taxon name and rank
+
+`taxon_name` and `taxon_rank` would be very similar to `taxon_id`.
+`taxon_rank` would either be based on a factor, or be factor-like and would have database-based validity checks for rank names and order.
+
+
+## Plans for taxon
+
+`taxon` would contain at least `taxon_name`, `taxon_rank` and `taxon_id` vectors.
+It would probably also have authority information.
+It could also have field for arbitrary information, but this might not be needed since it could be in a table that could contain that info in other columns.
+
+
+## Plans for taxonomy, taxmap, and hierarcy
+
+Probably leave as R6 for now.
+
+

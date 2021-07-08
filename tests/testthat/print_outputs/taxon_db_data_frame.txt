@@ -1,0 +1,6 @@
+> print(data.frame(x))
+     x
+1 ncbi
+2 ncbi
+3 itis
+

@@ -1,486 +1,545 @@
-## Testing `taxonomy` class
-
-library(taxa)
-library(testthat)
 context("taxonomy")
+library(taxa)
 
 
-## Creating test data
-notoryctidae <- taxon(
-  name = taxon_name("Notoryctidae"),
-  rank = taxon_rank("family"),
-  id = taxon_id(4479)
-)
-notoryctes <- taxon(
-  name = taxon_name("Notoryctes"),
-  rank = taxon_rank("genus"),
-  id = taxon_id(4544)
-)
-typhlops <- taxon(
-  name = taxon_name("typhlops"),
-  rank = taxon_rank("species"),
-  id = taxon_id(93036)
-)
-mammalia <- taxon(
-  name = taxon_name("Mammalia"),
-  rank = taxon_rank("class"),
-  id = taxon_id(9681)
-)
-felidae <- taxon(
-  name = taxon_name("Felidae"),
-  rank = taxon_rank("family"),
-  id = taxon_id(9681)
-)
-puma <- taxon(
-  name = taxon_name("Puma"),
-  rank = taxon_rank("genus"),
-  id = taxon_id(146712)
-)
-concolor <- taxon(
-  name = taxon_name("concolor"),
-  rank = taxon_rank("species"),
-  id = taxon_id(9696)
-)
-panthera <- taxon(
-  name = taxon_name("Panthera"),
-  rank = taxon_rank("genus"),
-  id = taxon_id(146712)
-)
-tigris <- taxon(
-  name = taxon_name("tigris"),
-  rank = taxon_rank("species"),
-  id = taxon_id(9696)
-)
-plantae <- taxon(
-  name = taxon_name("Plantae"),
-  rank = taxon_rank("kingdom"),
-  id = taxon_id(33090)
-)
-solanaceae <- taxon(
-  name = taxon_name("Solanaceae"),
-  rank = taxon_rank("family"),
-  id = taxon_id(4070)
-)
-solanum <- taxon(
-  name = taxon_name("Solanum"),
-  rank = taxon_rank("genus"),
-  id = taxon_id(4107)
-)
-lycopersicum <- taxon(
-  name = taxon_name("lycopersicum"),
-  rank = taxon_rank("species"),
-  id = taxon_id(49274)
-)
-tuberosum <- taxon(
-  name = taxon_name("tuberosum"),
-  rank = taxon_rank("species"),
-  id = taxon_id(4113)
-)
-unidentified <- taxon(name = taxon_name("unidentified"))
+# Creating taxonomy objects
 
-tiger <- hierarchy(mammalia, felidae, panthera, tigris)
-cougar <- hierarchy(mammalia, felidae, puma, concolor)
-mole <- hierarchy(mammalia, notoryctidae, notoryctes, typhlops)
-tomato <- hierarchy(plantae, solanaceae, solanum, lycopersicum)
-potato <- hierarchy(plantae, solanaceae, solanum, tuberosum)
-potato_partial <- hierarchy(solanaceae, solanum, tuberosum)
-unidentified_animal <- hierarchy(mammalia, unidentified)
-unidentified_plant <- hierarchy(plantae, unidentified)
-
-test_that("NSE", {
-  x <- taxonomy(tiger, cougar, mole)
-  expect_equal(all_names(x), x$all_names())
+test_that("taxonomy objects can be created from character input", {
+  x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+                  'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+                supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7))
+  expect_equal(length(x), 8)
+  expect_equal(class(x)[1], 'taxa_taxonomy')
 })
 
-test_that("Printing taxonomy", {
-  x <- taxonomy(tiger, cougar, mole)
-  expect_output(print(x), "Taxonomy")
-  expect_output(print(x), "9 taxa")
+test_that("taxonomy objects can be created from factor input", {
+  x <- taxonomy(as.factor(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+                            'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos')),
+                supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7))
+  expect_equal(length(x), 8)
+  expect_equal(class(x)[1], 'taxa_taxonomy')
 })
 
-test_that("Simple usage", {
-  x <- taxonomy(tiger, cougar, mole)
-  expect_length(x$taxa, 9)
-  expect_equal(dim(x$edge_list), c(9, 2))
-  expect_length(x$roots(), 1)
+test_that("taxonomy objects can be created with names", {
+  x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+                  'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+                supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7),
+                .names = letters[1:8])
+  expect_equal(length(x), 8)
+  expect_equal(class(x)[1], 'taxa_taxonomy')
+  expect_equal(names(x), letters[1:8])
 })
 
 
-test_that("Multiple roots", {
-  x <- taxonomy(tiger, cougar, mole, tomato, potato)
-  expect_length(x$taxa, 14)
-  expect_equal(dim(x$edge_list), c(14, 2))
-  expect_length(x$roots(), 2)
+# Printing
+
+test_that("taxonomy objects can be printed", {
+  x <- taxonomy(taxon(name = c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+                               'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+                      rank = c('order', 'family', 'genus', 'species',
+                               'species', 'family', 'genus', 'species'),
+                      id = taxon_id(c('33554', '9681', '9688', '9689',
+                                      '9694', '9632', '9639', '9644'),
+                                    db = 'ncbi'),
+                      auth = c('Bowdich, 1821', 'Fischer de Waldheim, 1817', 'Oken, 1816', 'L., 1758',
+                               'L., 1758', 'Fischer de Waldheim, 1817', 'L., 1758', 'L., 1758')),
+                supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7))
+  names(x) <- letters[1:8]
+  verify_output(path = test_path('print_outputs', 'taxonomy.txt'),
+                code = {print(x)},
+                crayon = TRUE)
 })
 
 
-test_that("Hierarchies of different lengths", {
-  x <- taxonomy(tiger, unidentified_animal)
-  expect_length(x$taxa, 5)
-  expect_equal(dim(x$edge_list), c(5, 2))
-  expect_length(x$roots(), 1)
+# Subsetting taxonomy objects with `[`
+
+test_that("taxonomy objects can be `[` subset by index", {
+  x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+                  'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+                supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7),
+                .names = letters[1:8])
+
+  # By default, all subtaxa are included
+  expect_equal(names(x[1]), letters[1:8])
+  expect_equal(names(x['c']), c('c', 'd', 'e'))
+  expect_equal(names(x[c(FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE)]), 'e')
+
+  ## Can turn off inclusion of subtaxa
+  expect_equal(names(x[1, subtaxa = FALSE]), 'a')
+  expect_equal(names(x['c', subtaxa = FALSE]), 'c')
+  expect_equal(names(x[c(FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE), subtaxa = FALSE]), 'e')
+
+  ## Can include supertaxa
+  expect_equal(names(x[1, supertaxa = TRUE]), letters[1:8])
+  expect_equal(names(x['c', supertaxa = TRUE]), c("a", "b", "c", "d", "e"))
+  expect_equal(names(x[c(FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE), supertaxa = TRUE]), c("a", "b", "c", "e"))
+
+  ## Can include only supertaxa
+  expect_equal(names(x[1, subtaxa = FALSE, supertaxa = TRUE]), 'a')
+  expect_equal(names(x['c', subtaxa = FALSE, supertaxa = TRUE]), c("a", "b", "c"))
+  expect_equal(names(x[c(FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE), subtaxa = FALSE, supertaxa = TRUE]), c("a", "b", "c", "e"))
+
+  ## Can invert the selection
+  expect_equal(length(x[1, invert = TRUE]), 0)
+  expect_equal(names(x['c', invert = TRUE]), c("a", "b", "f", "g", "h"))
+  expect_equal(names(x['c', supertaxa = TRUE, invert = TRUE]), c("f", "g", "h"))
+  expect_equal(names(x['c', subtaxa = FALSE, invert = TRUE]), c("a", "b", "d", "e", "f", "g", "h"))
+  expect_equal(names(x['c', subtaxa = FALSE, supertaxa = TRUE, invert = TRUE]), c("d", "e", "f", "g", "h"))
 })
 
 
-test_that("Same taxon name, different lineage", {
-  x <- taxonomy(unidentified_plant, unidentified_animal)
-  expect_length(x$taxa, 4)
-  expect_equal(dim(x$edge_list), c(4, 2))
-  expect_length(x$roots(), 2)
-  expect_equal(sum(sapply(x$taxa, function(x) x$name$name) == "unidentified"), 2)
+# Subsetting taxonomy objects with `[[`
+
+test_that("taxonomy objects can be subset with `[[`", {
+  x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+                  'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+                supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7),
+                .names = letters[1:8])
+  expect_equal(x[3], x[[3]])
+  expect_equal(x['c'], x[['c']])
+  expect_equal(x[5], x[[c(FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE)]])
+})
+
+test_that("subsetting taxonomy objects with `[[` only allows for a single selection", {
+  x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+                  'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+                supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7),
+                .names = letters[1:8])
+  expect_error(x[[1:2]], "attempt to select more than one element")
+  expect_error(x[[c('e', 'f')]], "attempt to select more than one element")
+  expect_error(x[[c(FALSE, TRUE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE)]], "attempt to select more than one element")
+  expect_error(x[[numeric(0)]], "attempt to select less than one element")
+  expect_error(x[[character(0)]], "attempt to select less than one element")
+  expect_error(x[[c(FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE)]], "attempt to select less than one element")
 })
 
 
-test_that("Edge cases", {
-  x <- taxonomy()
-  expect_length(x$taxa, 0)
-  expect_equal(dim(x$edge_list), c(0, 2))
-  expect_is(taxonomy(hierarchy()), "Taxonomy")
-  expect_equal(length(taxonomy(hierarchy())$taxa), 0)
-  expect_length(x$taxa, 0)
-  expect_equal(dim(x$edge_list), c(0, 2))
+
+# Setting names of taxonomy objects
+
+test_that("taxonomy objects can be named", {
+  x <- taxonomy(as.factor(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+                            'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos')),
+                supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7))
+  names(x) <- letters[1:8]
+  expect_equal(x, taxonomy(as.factor(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+                                       'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos')),
+                           supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7),
+                           .names = letters[1:8]))
+  expect_equal(names(x),  letters[1:8])
+  names(x)[2] <- 'x'
+  expect_equal(names(x), c("a", "x", "c", "d", "e", "f", "g", "h"))
+  names(x)[2:3] <- 'x'
+  expect_equal(names(x), c("a", "x", "x", "d", "e", "f", "g", "h"))
 })
 
 
-test_that("Characters as inputs", {
-  x <- taxonomy(c("a", "b", "c"), c("a", "d"))
-  expect_length(x$taxa, 4)
-  expect_equal(dim(x$edge_list), c(4, 2))
-  expect_length(x$roots(), 1)
+# Assigning values to taxonomy objects
 
-  # x <- taxonomy(list(c("a", "b", "c"), c("a", "d"))) # does not work yet
+test_that("Replacing a value with no taxonomic context does not change its place in the tree", {
+  x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+                  'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+                supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7),
+                .names = letters[1:8])
+
+  x[3] <- 'XXX'
+  expect_equal(length(x), 8)
+  expect_equal(supertaxa(x, subset = 3, max_depth = 1)[[1]], c(b = 2))
+  expect_equal(vctrs::field(x, 'supertaxa')[4:5], c(3, 3))
 })
 
-test_that("Accessing basic info", {
-  x <- taxonomy(tiger, cougar, mole, tomato, potato,
-                unidentified_plant, unidentified_animal)
-  expect_equal(x$taxon_indexes(), taxon_indexes(x))
-  expect_equivalent(taxon_indexes(x), seq_along(x$taxa))
+# Assign values to components
+
+test_that("components of taxonomy objects can be assigned", {
+  x <- taxonomy(c('A', 'B', 'C'))
+  tax_auth(x) <- c('a', 'b', 'c')
+  expect_equal(tax_auth(x), taxon_authority(c('a', 'b', 'c')))
+  tax_name(x) <- c('d', 'e', 'f')
+  expect_equal(tax_name(x), c('d', 'e', 'f'))
+  tax_rank(x) <- c('a', 'b', 'c')
+  expect_equal(tax_rank(x), taxon_rank(c('a', 'b', 'c')))
+  tax_id(x) <- c('1', '2', '3')
+  expect_equal(tax_id(x), taxon_id(c('1', '2', '3')))
+  tax_db(x) <- c('ncbi', 'ncbi', 'ncbi')
+  expect_equal(tax_db(x), taxon_db(c('ncbi', 'ncbi', 'ncbi')))
+  tax_author(x) <- c('g', 'h', 'i')
+  expect_equal(tax_author(x), c('g', 'h', 'i'))
+  tax_date(x) <- c('4', '5', '6')
+  expect_equal(tax_date(x), c('4', '5', '6'))
+  tax_cite(x) <- c('x', 'y', 'z')
+  expect_equal(tax_cite(x), c('x', 'y', 'z'))
 })
 
+# NOTE: It seems vctrs does not allow defining new values by index. Not sure if we will try to make this work anyway
+#
+# test_that("New values with no taxonomic context are added at the root of the tree", {
+#   x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+#                   'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+#                 supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7),
+#                 .names = letters[1:8])
+#
+#   x[9] <- 'XXX'
+#   expect_equal(length(x), 9)
+#   expect_true(is_root(x)[9])
+#
+#   x[11] <- 'YYY'
+#   expect_equal(length(x), 11)
+#   expect_true(all(is_root(x)[9:11]))
+# })
 
-test_that("Finding roots", {
-  x <- taxonomy(tiger, cougar, mole, tomato, potato,
-                unidentified_plant, unidentified_animal)
-  expect_equal(x$roots(), roots(x))
-
-  # Index return type
-  expect_type(roots(x, value = "taxon_indexes"), "integer")
-
-  # Taxon ID return type
-  expect_type(roots(x, value = "taxon_ids"), "character")
+test_that("Replacing a value with specified supertaxon preserves its subtaxa", {
+  x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+                  'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+                supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7),
+                .names = letters[1:8])
+  x[3, supertaxa = 6] <- 'XXX'
+  expect_equal(length(x), 8)
+  expect_equal(vctrs::field(x, 'supertaxa')[3], 6)
+  expect_equal(vctrs::field(x, 'supertaxa')[4:5], c(3, 3))
 })
 
-
-test_that("Finding internodes", {
-  x <- taxonomy(tiger, cougar, mole, tomato, potato,
-                unidentified_plant, unidentified_animal)
-  expect_equal(x$internodes(), internodes(x))
-  expect_equal(x$is_internode(), is_internode(x))
-
-  # Index return type
-  expect_type(internodes(x, value = "taxon_indexes"), "integer")
-
-  # Taxon ID return type
-  expect_type(internodes(x, value = "taxon_ids"), "character")
+test_that("Replacing a value with specified supertaxon cant make cyclical trees", {
+  x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+                  'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+                supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7),
+                .names = letters[1:8])
+  x[3, supertaxa = 4] <- 'XXX'
+  expect_equal(length(x), 8)
+  expect_equal(vctrs::field(x, 'supertaxa')[3], 4)
+  expect_equal(vctrs::field(x, 'supertaxa')[5], 3)
 })
 
+# NOTE: It seems vctrs does not allow defining new values by index. Not sure if we will try to make this work anyway
+#
+# test_that("Adding a value with specified supertaxon", {
+#   x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+#                   'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+#                 supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7),
+#                 .names = letters[1:8])
+#   x[9, supertaxa = 6] <- 'XXX'
+#   expect_equal(length(x), 9)
+#   expect_equal(vctrs::field(x, 'supertaxa')[9], 6)
+# })
 
-test_that("Finding id_classifications", {
-  x <- taxonomy(tiger, cougar, mole, tomato, potato,
-                unidentified_plant, unidentified_animal)
-  expect_equal(x$id_classifications(), id_classifications(x))
+test_that("Replacing a value with specified subtaxa sets its supertaxon to the common grouping of the subtaxa", {
+  x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+                  'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+                supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7),
+                .names = letters[1:8])
+  x[2, subtaxa = 7:8] <- 'XXX'
+  expect_equal(length(x), 8)
+  expect_equal(vctrs::field(x, 'supertaxa')[2], 6)
+  expect_equal(vctrs::field(x, 'supertaxa')[7], 2)
 })
 
+# NOTE: It seems vctrs does not allow defining new values by index. Not sure if we will try to make this work anyway
+#
+# test_that("Adding a value with specified subtaxa sets its supertaxon to the common grouping of the subtaxa", {
+#   x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+#                   'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+#                 supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7),
+#                 .names = letters[1:8])
+#   x[9, subtaxa = 7:8] <- 'XXX'
+#   expect_equal(length(x), 9)
+#   expect_equal(vctrs::field(x, 'supertaxa')[9], 6)
+#   expect_equal(vctrs::field(x, 'supertaxa')[7], 9)
+# })
 
-test_that("Finding id_classifications", {
-  x <- taxonomy(tiger, cougar, mole, tomato, potato,
-                unidentified_plant, unidentified_animal)
-  expect_equal(x$classifications(), classifications(x))
+test_that("Replacing a value with specified subtaxa cant make cyclical trees", {
+  x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+                  'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+                supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7),
+                .names = letters[1:8])
+  x[3, subtaxa = 2] <- 'XXX'
+  expect_equal(length(x), 8)
+  expect_equal(vctrs::field(x, 'supertaxa')[3], 1)
+  expect_equal(vctrs::field(x, 'supertaxa')[2], 3)
 })
 
-
-test_that("Finding n_supertaxa", {
-  x <- taxonomy(tiger, cougar, mole, tomato, potato,
-                unidentified_plant, unidentified_animal)
-  expect_equal(x$n_supertaxa(), n_supertaxa(x))
-})
-
-
-test_that("Finding n_supertaxa_1", {
-  x <- taxonomy(tiger, cougar, mole, tomato, potato,
-                unidentified_plant, unidentified_animal)
-  expect_equal(x$n_supertaxa_1(), n_supertaxa_1(x))
-})
-
-
-test_that("Finding n_subtaxa", {
-  x <- taxonomy(tiger, cougar, mole, tomato, potato,
-                unidentified_plant, unidentified_animal)
-  expect_equal(x$n_subtaxa(), n_subtaxa(x))
-})
-
-
-test_that("Finding n_subtaxa_1", {
-  x <- taxonomy(tiger, cougar, mole, tomato, potato,
-                unidentified_plant, unidentified_animal)
-  expect_equal(x$n_subtaxa_1(), n_subtaxa_1(x))
-})
-
-
-test_that("Finding branches", {
-  x <- taxonomy(tiger, cougar, mole, tomato, potato,
-                unidentified_plant, unidentified_animal)
-  expect_equal(x$branches(), branches(x))
-  expect_equal(x$is_branch(), is_branch(x))
-
-  # Index return type
-  expect_type(branches(x, value = "taxon_indexes"), "integer")
-
-  # Taxon ID return type
-  expect_type(branches(x, value = "taxon_ids"), "character")
-
-  # Expected output
-  expect_equal(which(! is_root(x) & ! is_leaf(x)), branches(x))
-
-})
-
-
-test_that("Finding supertaxa", {
-  x <- taxonomy(tiger, cougar, mole, tomato, potato,
-                unidentified_plant, unidentified_animal)
-  expect_equal(x$supertaxa(), supertaxa(x))
-
-  # Index return type
-  expect_type(supertaxa(x, value = "taxon_indexes")[[1]], "integer")
-  expect_type(supertaxa(x, value = "taxon_indexes", simplify = TRUE), "integer")
-
-  # Taxon ID return type
-  expect_type(supertaxa(x, value = "taxon_ids")[[1]], "character")
-  expect_type(supertaxa(x, value = "taxon_ids", simplify = TRUE), "character")
-
-  # Recursion settings
-  expect_equal(supertaxa(x, recursive = TRUE), supertaxa(x, recursive = -1))
-  expect_equal(supertaxa(x, recursive = FALSE), supertaxa(x, recursive = 1))
-  expect_equal(max(vapply(supertaxa(x, recursive = 2), length, numeric(1))), 2)
-
-  # Duplicated inputs
-  expect_equal(names(x$supertaxa(c(1, 2, 1, 1))), c("b", "c", "b", "b"))
-})
-
-
-test_that("Finding subtaxa", {
-  x <- taxonomy(tiger, cougar, mole, tomato, potato,
-                unidentified_plant, unidentified_animal)
-  expect_equal(x$subtaxa(), subtaxa(x))
-
-  # Index return type
-  expect_type(subtaxa(x, value = "taxon_indexes")[[1]], "integer")
-  expect_type(subtaxa(x, value = "taxon_indexes", simplify = TRUE), "integer")
-
-  # Taxon ID return type
-  expect_type(subtaxa(x, value = "taxon_ids")[[1]], "character")
-  expect_type(subtaxa(x, value = "taxon_ids", simplify = TRUE), "character")
-
-  # Subsets and NSE
-  my_var <- 2
-  expect_equivalent(eval(substitute(sapply(subtaxa(x, subset = n_subtaxa == my_var), length))), c(2, 2))
-
-  # Recursion settings
-  expect_equal(subtaxa(x, recursive = TRUE), subtaxa(x, recursive = -1))
-  expect_equal(subtaxa(x, recursive = FALSE), subtaxa(x, recursive = 1))
-  expect_equivalent(names(subtaxa(x, subset = "e", recursive = 2)$e), c("k", "o"))
-
-  # Edge cases
-  expect_equal(subtaxa(x, subset = rep(FALSE, 16)), list())
-  expect_equal(subtaxa(x, subset = rep(FALSE, 16), simplify = TRUE),
-               integer(0))
+test_that("Cannot make values supertaxa/subtaxa of themselves", {
+  x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+                  'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+                supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7),
+                .names = letters[1:8])
+  expect_error(x[2, supertaxa = 2] <- 'XXX', 'Cannot set a taxon to be a supertaxon of itself')
+  expect_error(x[1:2, supertaxa = 2] <- 'XXX', 'Cannot set a taxon to be a supertaxon of itself')
+  expect_error(x[2, subtaxa = 2] <- 'XXX', 'Cannot set a taxon to be a subtaxon of itself')
+  expect_error(x[2, subtaxa = 2:3] <- 'XXX', 'Cannot set a taxon to be a subtaxon of itself')
 })
 
 
-test_that("Finding stems", {
-  x <- taxonomy(tiger, cougar, mole, tomato, potato,
-                unidentified_plant, unidentified_animal)
-  expect_equal(x$stems(), stems(x))
-  expect_equal(x$is_stem(), is_stem(x))
-
-  # Index return type
-  expect_type(stems(x, value = "taxon_indexes")[[1]], "integer")
-  expect_type(stems(x, value = "taxon_indexes", simplify = TRUE), "integer")
-
-  # Taxon ID return type
-  expect_type(stems(x, value = "taxon_ids")[[1]], "character")
-  expect_type(stems(x, value = "taxon_ids", simplify = TRUE), "character")
-})
 
 
-test_that("Finding leaves", {
-  x <- taxonomy(tiger, cougar, mole, tomato, potato,
-                unidentified_plant, unidentified_animal)
-  expect_equal(x$leaves(), leaves(x))
-  expect_equal(x$is_leaf(), is_leaf(x))
-
-  # Index return type
-  expect_type(leaves(x, value = "taxon_indexes")[[1]], "integer")
-
-  # Taxon ID return type
-  expect_type(leaves(x, value = "taxon_ids")[[1]], "character")
-
-  # leaves_apply
-  expect_equal(sum(leaves_apply(x, length, subset = c(1, 2), simplify = TRUE)), 7)
-
-  # n_leaves
-  expect_equal(n_leaves(x), unlist(leaves_apply(x, length)))
-
-  # n_leaves_1
-  expect_equivalent(n_leaves_1(x)["l"], 2)
-})
-
-test_that("Filtering taxa", {
-  x <- taxonomy(tiger, cougar, mole, tomato, potato,
-                unidentified_plant, unidentified_animal)
-
-  result <- filter_taxa(x, taxon_names == "Solanum")
-  expect_equal(result$taxon_names(), c("l" = "Solanum"))
-  expect_warning(filter_taxa(x, taxon_names == "Solanum", drop_obs = FALSE))
-  expect_warning(filter_taxa(x, taxon_names == "Solanum", reassign_obs = TRUE))
-
-  # Check that filtering does not change order of taxa
-  result <- filter_taxa(x, taxon_names != "tuberosum")
-  expected_names <- taxon_names(x)
-  expected_names <- expected_names[expected_names != "tuberosum"]
-  expect_true(all(expected_names == taxon_names(result)))
-
-  result <- filter_taxa(x, taxon_names == "Solanum", subtaxa = TRUE, invert = TRUE)
-  expected_names <- taxon_names(x)
-  expected_names <- expected_names[! expected_names %in% c("Solanum", "lycopersicum", "tuberosum")]
-  expect_true(all(expected_names == taxon_names(result)))
-
-  # Errors for invalid indexes
-  expect_error(filter_taxa(x, 100), "The following taxon indexes are invalid:")
-
-  # Errors for invalid IDs
-  expect_error(filter_taxa(x, "zzz"), "The following taxon IDs do not exist:")
-
-  # Errors for invalid logical
-  expect_error(filter_taxa(x, TRUE), "must be the same length as the number of taxa")
-
-  # Edge case: filtering everything out
-  result <- filter_taxa(x, numeric(0))
-  expect_equal(length(result$taxa), 0)
-  expect_equal(result, filter_taxa(x, NULL, numeric(0)))
-  expect_equal(result, filter_taxa(x, "c", numeric(0)))
-
-  # Edge case: NULL input (shou)
-  expect_equal(filter_taxa(x, NULL), x)
-  expect_equal(filter_taxa(x, NULL, NULL), x)
-  expect_equal(filter_taxa(x, NULL, "c"), filter_taxa(x, "c"))
-})
 
 
-test_that("Sampling taxa",  {
-  x <- taxonomy(tiger, cougar, mole, tomato, potato,
-                unidentified_plant, unidentified_animal)
+# Can be concatenated
 
-  result <- sample_n_taxa(x, size = 3)
-  expect_equal(length(taxon_ids(result)), 3)
-  expect_warning(sample_n_taxa(x, size = 3, obs_weight = 1))
-  expect_warning(sample_n_taxa(x, size = 3, obs_target = 1))
-
-  result <- sample_frac_taxa(x, size = 0.5)
-  expect_equal(length(taxon_ids(result)), 8)
-})
-
-test_that("Mapping vairables",  {
-  x <- taxonomy(tiger, cougar, mole, tomato, potato,
-                unidentified_plant, unidentified_animal)
-  result <- map_data(x, taxon_names, taxon_ranks)
-  expect_equal(result, map_data_(x, taxon_names(x), taxon_ranks(x)))
-  expect_equivalent(result, taxon_ranks(x))
-  expect_equivalent(names(result), taxon_names(x))
-  expect_warning(map_data(x, taxon_names, c("e" = "A", "e" = "B")))
-  expect_silent(map_data(x, taxon_names, c("e" = "A", "e" = "B"), warn = FALSE))
-  expect_error(map_data(x, taxon_names, 1:10))
-})
-
-
-test_that("dots and .list return the same output", {
-  expect_equal(taxonomy(tiger, cougar, mole, tomato, potato),
-               taxonomy(.list = list(tiger, cougar, mole, tomato, potato)))
-})
-
-test_that("get data frame", {
-  x <- taxonomy(tiger, cougar, mole, tomato, potato,
-                unidentified_plant, unidentified_animal)
-  expect_equal(x$get_data_frame(), get_data_frame(x))
-
-  df <- x$get_data_frame()
-  expect_is(df, "data.frame")
-  expect_is(df$taxon_names, "character")
-
-  # select columns to return
-  expect_named(x$get_data_frame("taxon_ids"), "taxon_ids")
-})
-
-
-test_that("supertaxa_apply function", {
-  x <- taxonomy(tiger, cougar, mole, tomato, potato,
-                unidentified_plant, unidentified_animal)
-  expect_equal(lapply(supertaxa(x), length),
-               supertaxa_apply(x, length))
-})
-
-
-test_that("subtaxa_apply function", {
-  x <- taxonomy(tiger, cougar, mole, tomato, potato,
-                unidentified_plant, unidentified_animal)
-  expect_equal(lapply(subtaxa(x), length),
-               subtaxa_apply(x, length))
-})
-
-
-test_that("replacing taxon IDs", {
-  x <- taxonomy(tiger, cougar, mole, tomato, potato,
-                unidentified_plant, unidentified_animal)
-  result <- replace_taxon_ids(x, 1:16)
-  expect_equivalent(taxon_ids(result), 1:16)
-  expect_error(replace_taxon_ids(x, 1:10), "different than the current number of taxa")
-  expect_error(replace_taxon_ids(x, rep(1, 16)), "New taxon IDs must be unique")
-})
-
-
-test_that("removing redundant names", {
-  lycopersicum <- taxon(
-    name = taxon_name("Solanum lycopersicum"),
-    rank = taxon_rank("species"),
-    id = taxon_id(49274)
+test_that("taxonomy objects can be combined", {
+  x <- taxonomy(taxon(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+                        'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+                      rank = c('order', 'family', 'genus', 'species',
+                               'species', 'family', 'genus', 'species')),
+                supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7),
+                .names = letters[1:8])
+  y <- taxonomy(taxon(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo'),
+                      rank = c('order', 'family', 'genus', 'species')),
+                supertaxa = c(NA, 1, 2, 3),
+                .names = letters[1:4])
+  z <- taxonomy(taxon(c('Carnivora', 'Felidae'), rank = c('order', 'family')),
+                supertaxa = c(NA, 1),
+                .names = letters[1:2])
+  expect_equal(
+    c(x, y),
+    taxonomy(taxon(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+                     'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos',
+                     'Carnivora', 'Felidae', 'Panthera', 'Panthera leo'),
+                   rank = c('order', 'family', 'genus', 'species',
+                            'species', 'family', 'genus', 'species',
+                            'order', 'family', 'genus', 'species')),
+             supertaxa = c(c(NA, 1, 2, 3, 3, 1, 6, 7),  c(NA, 1, 2, 3) + 8),
+             .names = c(letters[1:8], letters[1:4]))
   )
-  tuberosum <- taxon(
-    name = taxon_name("Solanum tuberosum"),
-    rank = taxon_rank("species"),
-    id = taxon_id(4113)
+  expect_equal(
+    c(x, y, z),
+    taxonomy(taxon(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+                     'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos',
+                     'Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+                     'Carnivora', 'Felidae'),
+                   rank = c('order', 'family', 'genus', 'species',
+                            'species', 'family', 'genus', 'species',
+                            'order', 'family', 'genus', 'species',
+                            'order', 'family')),
+             supertaxa = c(c(NA, 1, 2, 3, 3, 1, 6, 7),  c(NA, 1, 2, 3) + 8, c(NA, 1) + 12),
+             .names = c(letters[1:8], letters[1:4], letters[1:2]))
   )
-  x <- taxonomy(tiger, cougar, mole, tomato, potato,
-                unidentified_plant, unidentified_animal)
-  result <- remove_redundant_names(x)
-  expect_true(all(c("tuberosum", "lycopersicum") %in% taxon_names(result)))
+  expect_equal(c(x, y, x, y), c(c(x, y), c(x, y)))
+  expect_equal(c(x), x)
 })
 
 
-test_that("taxonomy can be converted to tables", {
-  x <- taxonomy(tiger, cougar, mole, tomato, potato,
-                unidentified_plant, unidentified_animal)
-  expect_message(result <- taxonomy_table(x),
-                 "The following ranks will not be included")
-  expect_equal(colnames(result), c("class", "family", "genus", "species"))
-  result <- taxonomy_table(x, use_ranks = FALSE)
-  expect_equal(colnames(result), c("rank_1", "rank_2", "rank_3", "rank_4"))
+
+
+# Works with `seq_along`
+
+test_that("taxonomy objects work with `seq_along`", {
+  x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+                  'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+                supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7),
+                .names = letters[1:8])
+  expect_equal(seq_along(x), 1:8)
 })
 
 
-test_that("print_tree works", {
-  x <- taxonomy(tiger, cougar, mole, tomato, potato,
-                unidentified_plant, unidentified_animal)
-  expect_equal(print_tree(x)[1], "Mammalia")
+# Can be converted to character
+
+test_that("taxonomy objects can be converted to characters", {
+  x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+                  'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+                supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7))
+  expect_equal(as.character(x),
+               c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+                 'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'))
 })
 
+test_that("named taxonomy objects can be converted to characters", {
+  x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+                  'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+                supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7),
+                .names = letters[1:8])
+  expect_equal(as.character(x),
+               stats::setNames(
+                 c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+                   'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+                 letters[1:8]
+               ))
+})
+
+
+# Can be converted to factor
+
+test_that("taxonomy objects can be converted to factor", {
+  x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+                  'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+                supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7))
+  expect_equal(as.factor(x), as.factor(as.character(x)))
+})
+
+test_that("named taxonomy objects can be converted to factor", {
+  x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+                  'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+                supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7),
+                .names = letters[1:8])
+  expect_equal(as.factor(x), as.factor(as.character(x)))
+})
+
+
+# Can be converted to a data.frame
+
+test_that("taxonomy objects can be converted to a data.frame", {
+  x <- taxonomy(taxon(name = c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+                               'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+                      rank = c('order', 'family', 'genus', 'species',
+                               'species', 'family', 'genus', 'species'),
+                      id = taxon_id(c('33554', '9681', '9688', '9689',
+                                      '9694', '9632', '9639', '9644'),
+                                    db = 'ncbi'),
+                      auth = c('Bowdich, 1821', 'Fischer de Waldheim, 1817', 'Oken, 1816', 'L., 1758',
+                               'L., 1758', 'Fischer de Waldheim, 1817', 'L., 1758', 'L., 1758')),
+                supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7))
+
+  expect_equal(
+    as_data_frame(x),
+    data.frame(
+      supertaxon = c(NA, 1, 2, 3, 3, 1, 6, 7),
+      tax_name = c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+                   'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+      tax_rank = c('order', 'family', 'genus', 'species',
+                   'species', 'family', 'genus', 'species'),
+      tax_id = c('33554', '9681', '9688', '9689',
+                 '9694', '9632', '9639', '9644'),
+      tax_db = 'ncbi',
+      tax_author = c('Bowdich', 'Fischer de Waldheim', 'Oken', 'L.',
+                     'L.', 'Fischer de Waldheim', 'L.', 'L.'),
+      tax_date = c('1821', '1817', '1816', '1758',
+                   '1758', '1817', '1758', '1758'),
+      tax_cite = NA_character_
+      )
+  )
+})
+
+test_that("named taxonomy objects can be converted to data.frame", {
+  x <- taxonomy(taxon(name = c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+                               'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+                      rank = c('order', 'family', 'genus', 'species',
+                               'species', 'family', 'genus', 'species'),
+                      id = taxon_id(c('33554', '9681', '9688', '9689',
+                                      '9694', '9632', '9639', '9644'),
+                                    db = 'ncbi'),
+                      auth = c('Bowdich, 1821', 'Fischer de Waldheim, 1817', 'Oken, 1816', 'L., 1758',
+                               'L., 1758', 'Fischer de Waldheim, 1817', 'L., 1758', 'L., 1758')),
+                supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7))
+  names(x) <- letters[1:8]
+
+  expect_equal(
+    as_data_frame(x),
+    data.frame(
+      supertaxon = c(NA, 1, 2, 3, 3, 1, 6, 7),
+      tax_name = c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+                   'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+      tax_rank = c('order', 'family', 'genus', 'species',
+                   'species', 'family', 'genus', 'species'),
+      tax_id = c('33554', '9681', '9688', '9689',
+                 '9694', '9632', '9639', '9644'),
+      tax_db = 'ncbi',
+      tax_author = c('Bowdich', 'Fischer de Waldheim', 'Oken', 'L.',
+                     'L.', 'Fischer de Waldheim', 'L.', 'L.'),
+      tax_date = c('1821', '1817', '1816', '1758',
+                   '1758', '1817', '1758', '1758'),
+      tax_cite = NA_character_
+    )
+  )
+})
+
+
+# Can be converted to a tibble
+
+test_that("taxonomy objects can be converted to a tibble", {
+  x <- taxonomy(taxon(name = c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+                               'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+                      rank = c('order', 'family', 'genus', 'species',
+                               'species', 'family', 'genus', 'species'),
+                      id = taxon_id(c('33554', '9681', '9688', '9689',
+                                      '9694', '9632', '9639', '9644'),
+                                    db = 'ncbi'),
+                      auth = c('Bowdich, 1821', 'Fischer de Waldheim, 1817', 'Oken, 1816', 'L., 1758',
+                               'L., 1758', 'Fischer de Waldheim, 1817', 'L., 1758', 'L., 1758')),
+                supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7))
+
+  expect_equal(
+    tibble::as_tibble(x),
+    tibble::tibble(
+      supertaxon = c(NA, 1, 2, 3, 3, 1, 6, 7),
+      tax_name = c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+                   'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+      tax_rank = c('order', 'family', 'genus', 'species',
+                   'species', 'family', 'genus', 'species'),
+      tax_id = c('33554', '9681', '9688', '9689',
+                 '9694', '9632', '9639', '9644'),
+      tax_db = 'ncbi',
+      tax_author = c('Bowdich', 'Fischer de Waldheim', 'Oken', 'L.',
+                     'L.', 'Fischer de Waldheim', 'L.', 'L.'),
+      tax_date = c('1821', '1817', '1816', '1758',
+                   '1758', '1817', '1758', '1758'),
+      tax_cite = NA_character_
+    )
+  )
+})
+
+test_that("named taxonomy objects can be converted to a tibble", {
+  x <- taxonomy(taxon(name = c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+                               'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+                      rank = c('order', 'family', 'genus', 'species',
+                               'species', 'family', 'genus', 'species'),
+                      id = taxon_id(c('33554', '9681', '9688', '9689',
+                                      '9694', '9632', '9639', '9644'),
+                                    db = 'ncbi'),
+                      auth = c('Bowdich, 1821', 'Fischer de Waldheim, 1817', 'Oken, 1816', 'L., 1758',
+                               'L., 1758', 'Fischer de Waldheim, 1817', 'L., 1758', 'L., 1758')),
+                supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7))
+  names(x) <- letters[1:8]
+
+  expect_equal(
+    tibble::as_tibble(x),
+    tibble::tibble(
+      supertaxon = c(NA, 1, 2, 3, 3, 1, 6, 7),
+      tax_name = c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+                   'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+      tax_rank = c('order', 'family', 'genus', 'species',
+                   'species', 'family', 'genus', 'species'),
+      tax_id = c('33554', '9681', '9688', '9689',
+                 '9694', '9632', '9639', '9644'),
+      tax_db = 'ncbi',
+      tax_author = c('Bowdich', 'Fischer de Waldheim', 'Oken', 'L.',
+                     'L.', 'Fischer de Waldheim', 'L.', 'L.'),
+      tax_date = c('1821', '1817', '1816', '1758',
+                   '1758', '1817', '1758', '1758'),
+      tax_cite = NA_character_
+    )
+  )
+})
+
+
+# Can be made unique
+
+test_that("taxa in taxonomy objects can be made unique", {
+  x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+                  'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+                supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7))
+  y <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+                  'Panthera tigris', 'Kitty'),
+                supertaxa = c(NA, 1, 2, 3, 3, 3))
+  x <- c(x, y)
+
+  expect_equal(
+    unique(x),
+    taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+               'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos', 'Kitty'),
+             supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7, 3))
+  )
+})
+
+
+# works with %in%
+
+test_that("taxonomy objects work with %in%", {
+  x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
+                  'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
+                supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7))
+  expect_true('Carnivora' %in% x)
+  expect_equal(x %in% 'Carnivora', tax_name(x) %in% 'Carnivora')
+  expect_true(x[1, subtaxa = FALSE] %in% x)
+  expect_equal(x %in% x[1, subtaxa = FALSE], tax_name(x) %in% 'Carnivora')
+  expect_false('sapiens' %in% x)
+  expect_true(factor('Carnivora') %in% x)
+  expect_equal(which(x %in% factor('Carnivora')), 1)
+})

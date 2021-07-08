@@ -4,45 +4,78 @@
 \alias{taxon_rank}
 \title{Taxon rank class}
 \usage{
-taxon_rank(name, database = NULL)
+taxon_rank(
+  rank = character(),
+  .names = NULL,
+  levels = NULL,
+  guess_order = TRUE
+)
 }
 \arguments{
-\item{name}{(character) rank name. required}
+\item{rank}{Zero or more taxonomic rank names. Inputs will be transformed to a \link{character}
+vector.}
 
-\item{database}{(character) database class object, optional}
+\item{.names}{The names of the vector}
+
+\item{levels}{A named numeric vector indicating the names and orders of possible taxonomic ranks.
+Higher numbers indicate for fine-scale groupings. Ranks of unknown order can be indicated with
+\code{NA} instead of a number.}
+
+\item{guess_order}{If \code{TRUE} and no rank order is given using numbers, try to guess order based
+on rank names.}
 }
 \value{
-An \code{R6Class} object of class \code{TaxonRank}
+An \code{S3} object of class \code{taxa_taxon_rank}
 }
 \description{
-Stores the rank of a taxon. This is typically used to store where taxon
-information came from in \code{\link[=taxon]{taxon()}} objects.
+\Sexpr[results=rd, stage=render]{taxa:::lifecycle("maturing")}
+Used to store taxon ranks, possibly associated with a taxonomy database. This is typically used to
+store taxon ranks in \link{taxon} objects.
 }
 \examples{
-taxon_rank("species")
-taxon_rank("genus")
-taxon_rank("kingdom")
 
-(x <- taxon_rank(
-  "species",
-  database_list$ncbi
-))
-x$rank
-x$database
+# Making new objects
+x <- taxon_rank(c('species', 'species', 'phylum', 'family'))
 
-# a null taxon_name object
-taxon_name(NULL)
+# Specifiying level order
+taxon_rank(c('A', 'B', 'C', 'D', 'A', 'D', 'D'),
+           levels = c('D', 'C', 'B', 'A'))
+taxon_rank(c('A', 'B', 'C', 'D', 'A', 'D', 'D'),
+           levels = c(D = NA, A = 10, B = 20, C = 30))
+names(x) <- c('a', 'b', 'c', 'd')
+
+# Manipulating objects
+as.character(x)
+as.factor(x)
+as.ordered(x)
+x[2:3]
+x[x > 'family'] <- taxon_rank('unknown')
+x[1] <- taxon_rank('order')
+x['b']
+x['b'] <- 'order'
+
+# Using as columns in tables
+tibble::tibble(x = x, y = 1:4)
+data.frame(x = x, y = 1:4)
+
+# Converting to tables
+tibble::as_tibble(x)
+as_data_frame(x)
+
+# Trying to add an unknown level as a character causes an error
+#x[2] <- 'superkingdom'
+
+# But you can add a new level using taxon_rank objects
+x[2] <- taxon_rank('superkingdom')
+
 }
 \seealso{
 Other classes: 
-\code{\link{hierarchies}()},
-\code{\link{hierarchy}()},
-\code{\link{taxa}()},
-\code{\link{taxmap}()},
-\code{\link{taxon_database}()},
+\code{\link{[.taxa_classification}()},
+\code{\link{classification}()},
+\code{\link{taxon_authority}()},
+\code{\link{taxon_db}()},
 \code{\link{taxon_id}()},
-\code{\link{taxon_name}()},
-\code{\link{taxonomy}()},
 \code{\link{taxon}()}
 }
 \concept{classes}

@@ -4,45 +4,64 @@
 \alias{taxon_id}
 \title{Taxon ID class}
 \usage{
-taxon_id(id, database = NULL)
+taxon_id(id = character(), db = NA, .names = NULL)
 }
 \arguments{
-\item{id}{(character/integer/numeric) a taxonomic id, required}
+\item{id}{Zero or more taxonomic ids. Inputs will be transformed to a \link{character} vector if
+possible.}
 
-\item{database}{(database) database class object, optional}
+\item{db}{The name(s) of the database(s) associated with the IDs. If not \code{NA} (the default), the
+input must consist of names of databases in \link[=db_ref]{db_ref$get()}.}
+
+\item{.names}{The names that will be applied to the vector.}
 }
 \value{
-An \code{R6Class} object of class \code{TaxonId}
+An \code{S3} object of class \code{taxa_taxon_id}
 }
 \description{
-Used to store taxon IDs, either arbitrary or from a taxonomy database. This
-is typically used to store taxon IDs in \code{\link[=taxon]{taxon()}} objects.
+\Sexpr[results=rd, stage=render]{taxa:::lifecycle("maturing")}
+Used to store the ID corresponding to taxa, either arbitrary or from a
+particular taxonomy database. This is typically used to store taxon IDs in
+\link{taxon} objects.
 }
 \examples{
-(x <- taxon_id(12345))
-x$id
-x$database
 
-(x <- taxon_id(
-  12345,
-  database_list$ncbi
-))
-x$id
-x$database
+# Making new objects
+x <- taxon_id(c('A', 'B', 'C'))
+x <- taxon_id(c('9606', '1386', '4890', '4345'), db = 'ncbi')
+x <- taxon_id(c('9606', '1386', '4890', '4345'),
+              db = c('ncbi', 'ncbi', 'itis', 'itis'))
+names(x) <- c('a', 'b', 'c', 'd')
 
-# a null taxon_name object
-taxon_name(NULL)
+# Manipulating objects
+as.character(x)
+x[2:3]
+x[2:3] <- 'ABC'
+x[c('a', 'c')] <- '123'
+x[['b']] <- taxon_id('123423', db = 'ncbi')
+tax_db(x)
+tax_db(x) <- 'nbn'
+c(x, x)
+
+# Using as columns in tables
+tibble::tibble(x = x, y = 1:4)
+data.frame(x = x, y = 1:4)
+
+# Convert to tables
+tibble::as_tibble(x)
+as_data_frame(x)
+
+# Trying to use an invalid ID with a specified database causes an error
+#taxon_id('NOLETTERS', db = 'ncbi')
+
 }
 \seealso{
 Other classes: 
-\code{\link{hierarchies}()},
-\code{\link{hierarchy}()},
-\code{\link{taxa}()},
-\code{\link{taxmap}()},
-\code{\link{taxon_database}()},
-\code{\link{taxon_name}()},
+\code{\link{[.taxa_classification}()},
+\code{\link{classification}()},
+\code{\link{taxon_authority}()},
+\code{\link{taxon_db}()},
 \code{\link{taxon_rank}()},
-\code{\link{taxonomy}()},
 \code{\link{taxon}()}
 }
 \concept{classes}

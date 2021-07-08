@@ -1,7 +1,11 @@
-taxa [current]
+taxa 0.4.0
 ==========
 
-* Replaced depreciated `as.tbl` function from `dplyr`
+LARGE CHANGES:
+
+The beginning of a complete rewrite of the `taxa` package to make the more basic component classes more like base R vectors.
+The `taxmap` class is not yet reimplemented, but will be similar to the class in the previous versions of taxa.
+The old version of `taxa` has been incorperated into the `metacoder` package unitl this version of taxa is mature, at which time `metacoder` will also use this version.
 
 taxa 0.3.4
 ==========

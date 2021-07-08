@@ -1,0 +1,5 @@
+> print(x)
+<taxon_id[3]>
+       a        b        c 
+1[90m (ncbi)[39m 2[90m (ncbi)[39m 3[90m (itis)[39m 
+

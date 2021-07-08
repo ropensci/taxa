@@ -11,3 +11,4 @@ scratch/*.eps
 scratch/*.pdf
 scratch/*.html
 vignettes/.build.timestamp
+notes/*.html

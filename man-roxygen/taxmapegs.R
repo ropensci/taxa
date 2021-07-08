@@ -4,9 +4,9 @@
 #' #  not created from scratch, but this is for demostration purposes.
 #'
 #' notoryctidae <- taxon(
-#' name = taxon_name("Notoryctidae"),
-#' rank = taxon_rank("family"),
-#' id = taxon_id(4479)
+#'   name = taxon_name("Notoryctidae"),
+#'   rank = taxon_rank("family"),
+#'   id = taxon_id(4479)
 #' )
 #' notoryctes <- taxon(
 #'   name = taxon_name("Notoryctes"),

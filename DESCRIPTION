@@ -1,16 +1,13 @@
 Package: taxa
 Type: Package
-Title: Taxonomic Classes
-Description: Provides taxonomic classes for
-    groupings of taxonomic names without data, and those
-    with data. Methods provided are "taxonomically aware", in
-    that they know about ordering of ranks, and methods that
-    filter based on taxonomy also filter associated data. 
-    This package is described in the publication: "Taxa: An R 
-    package implementing data standards and methods for 
-    taxonomic data", Zachary S.L. Foster, Scott Chamberlain,  
-    Niklaus J. Grünwald (2018) <doi:10.12688/f1000research.14013.2>.
-Version: 0.3.4.9001
+Title: Classes for Storing and Manipulating Taxonomic Data
+Description: Provides classes for storing and manipulating taxonomic data. 
+ Most of the classes can be treated like base R vectors (e.g. can be used 
+ in tables as columns and can be named). Vectorized classes can store taxon names
+ and authorities, taxon IDs from databases, taxon ranks, and other types of
+ information. More complex classes are provided to store taxonomic trees and
+ user-defined data associated with them.
+Version: 0.4.0
 Authors@R: c(
     person("Scott", "Chamberlain", role = "aut", 
        email = "myrmecocystus+r@gmail.com", comment = c(ORCID = "0000-0003-1444-9135")),
@@ -18,10 +15,9 @@ Authors@R: c(
        email = "zacharyfoster1989@gmail.com", comment = c(ORCID = "0000-0002-5075-0948"))
     )
 Depends:
-    R (>= 3.0.2)
-VignetteBuilder: knitr
+    R (>= 3.0.2),
+    vctrs
 LazyLoad: yes
-LazyData: yes
 Encoding: UTF-8
 License: MIT + file LICENSE
 URL: https://docs.ropensci.org/taxa, https://github.com/ropensci/taxa
@@ -40,7 +36,10 @@ Imports:
     crayon,
     tidyr,
     utils,
-    taxize
+    pillar,
+    methods,
+    viridisLite,
+    cli
 Suggests:
     roxygen2 (>= 6.0.1),
     testthat,
@@ -48,4 +47,3 @@ Suggests:
 RoxygenNote: 7.1.1
 X-schema.org-applicationCategory: Taxonomy
 X-schema.org-keywords: taxonomy, biology, hierarchy
-X-schema.org-isPartOf: https://ropensci.org

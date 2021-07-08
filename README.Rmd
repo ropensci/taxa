@@ -15,30 +15,19 @@ knitr::opts_chunk$set(
 ```
 
 [![Build Status](https://travis-ci.org/ropensci/taxa.svg?branch=master)](https://travis-ci.org/ropensci/taxa)
-[![cran checks](https://cranchecks.info/badges/worst/taxa)](https://cranchecks.info/pkgs/taxa)
 [![codecov](https://codecov.io/gh/ropensci/taxa/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/taxa)
 [![Project Status: WIP - Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](http://www.repostatus.org/badges/latest/wip.svg)](http://www.repostatus.org/#wip)
-[![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/taxa)](https://github.com/metacran/cranlogs.app)
 [![cran version](http://www.r-pkg.org/badges/version/taxa)](https://cran.r-project.org/package=taxa)
 
+This is an R package that provides classes to store and manipulate taxonomic data.
+Most of the classes can be used like base R vectors.
+This project is currently under development package.
 
-```{r child = 'vignettes/taxa-introduction.Rmd'}
-```
-
-
-## Use cases
-
-* use in [binomen](https://github.com/ropensci/binomen):
-    * if this pkg does classes, `binomen` can focus on [verbs](https://github.com/ropensci/binomen#verbs), e.g., manipulating taxonomic classes, doing `split-apply-combine` type things
-* use in [taxize](https://github.com/ropensci/taxize):
-    * as we don't want to break things, probably ideal to have coercion fxns, e.g., `as.taxon()`, which will convert e.g., the output of `get_uid()` to a `taxa` taxonomic class, which we can then go downstream and do things with (i.e., whatever we build on top of the classes)
-    * Or we could even have output of `get_*()` functions do coercion to `taxa` classes on output since they are just simple S3 classes without print methods right now
-* use in [metacoder](https://github.com/grunwaldlab/metacoder): This will eventually replace the similar classes used in metacoder.
 
 ## Contributors
 
-* [Scott Chamberlain](https://github.com/sckott)
 * [Zachary Foster](https://github.com/zachary-foster)
+* [Scott Chamberlain](https://github.com/sckott)
 
 ## Comments and contributions
 
@@ -53,4 +42,4 @@ https://github.com/ropensci/taxa/issues
 * Please [report any issues or bugs](https://github.com/ropensci/taxa/issues).
 * License: MIT
 * Get citation information for `taxa` in R doing `citation(package = 'taxa')`
-* Please note that this project is released with a contributor code of conduct. By participating in this project you agree to abide by its terms.
+* Please note that this project is released with a Contributor Code of Conduct (see CONDUCT.md). By participating in this project you agree to abide by its terms.

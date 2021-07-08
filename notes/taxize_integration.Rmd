@@ -1,0 +1,190 @@
+
+
+# Notes on taxize integration
+
+```{r}
+library('taxize')
+```
+
+
+## General thoughts
+
+* Add a `simplify` option for all functions that whose focus is to return information that could be encoded in `taxon_name`, `taxon_id`, `taxon`, or `taxon_rank` vectors, but all return other associated information in tables. If `simplify = TRUE` the just the vector is returned, if `simplify = FALSE` then the vector is the first column in a table containing the other information.
+
+
+## gnr_resolve
+
+```{r}
+temp <- gnr_resolve(names = c("Helianthos annus", "Homo saapiens"))
+head(temp)
+```
+
+The `matched_name` could be a `taxon_name` or `taxon` vector and the `data_source_title` could be encoded in its `taxon_id` field.
+
+
+## get_* functions
+
+```{r}
+mynames <- c("Helianthus annuus ssp. jaegeri", "Helianthus annuus ssp. lenticularis", "Helianthus annuus ssp. texanus")
+(tsn <- get_tsn(mynames, accepted = FALSE))
+```
+
+These could return `taxon_id` vectors, which would store the database in their `taxon_db` fields instead of using a class for the database.
+The other attributes could remain the same or be put returned as columns in a table.
+
+  
+
+## accepted names functions
+
+```{r}
+itis_acceptname(searchtsn = tsn)
+```
+
+The `acceptedname`, `acceptedtsn`, and `author` columns could be converted to a `taxon_name` vector column.
+Alternativly, a vector of `taxon` objects could be returned with the accepted as the first synonym and the query as the second.
+
+## classification
+
+```{r}
+specieslist <- c("Abies procera","Pinus contorta")
+classification(specieslist, db = 'itis')
+```
+
+This could return a `classification` vector.
+
+
+## as.*id functions
+
+Would probably be replaced by the `taxon_id` constructor to replicate the `check = FALSE` behavior.
+For the `check = TRUE` behavior, perhaps `taxon_id` class should have a `validated` boolean field and then these functions could be replaced with a `check_taxon_id` function that populates that field.
+This would allow a vector of IDs from different databases to be validated.
+
+
+## downstream
+
+
+```{r}
+downstream("Dasypodidae", downto = "Species", db = "col")
+downstream("Dasypodidae", downto = "Species", db = "col", intermediate = TRUE)
+```
+
+When `intermediate = FALSE`, the return value could be a list of `taxon_name` vectors or the columns with ids, names, ranks, and name status could be replaved with a `taxon_name` vector.
+
+When `intermediate = TRUE`, the same as `intermediate = FALSE` as described above could be used, or a list of `taxonomy` could be returned.
+
+
+## children
+
+```{r}
+children("Pinaceae", db = "ncbi")
+```
+
+Can also be list of `taxon_name` or tables with `taxon_name` as a column.
+
+
+## genbank2uid
+
+
+```{r}
+genbank2uid(id = 'AJ748748')
+```
+
+Can return `taxon_id` vector.
+
+
+## apgOrders and apgFamilies
+
+```{r}
+x = apgOrders()
+head(x)
+```
+
+Can return a `taxon` vector so synonyms can be included.
+
+
+## apg_lookup
+
+```{r}
+apg_lookup(taxa = "Hyacinthaceae", rank = "family")
+apg_lookup(taxa = "Asteraceae", rank = "family")
+```
+
+
+Can return a `taxon_name` with the the db set to `apg`
+
+
+## as.data.frame.*id
+
+```{r}
+as.data.frame(as.boldid(c("1973","101009","98597"), check=FALSE))
+```
+
+This functionality could mostly be handled by `as.data.frame.taxon_id`, except for the `multiple_matches` `pattern_match` columns.
+Perhaps these functions can call  `as.data.frame.taxon_id` and add on those columns
+
+
+## bold_search
+
+```{r}
+bold_search(name=c("Apis","Puma concolor"))
+bold_search(id=c(88899, 88899), dataTypes="all")
+bold_search(id=c(88899, 88899), dataTypes="stats")
+bold_search(id=c(88899, 88899), dataTypes="geo")
+```
+
+Can replace `taxid`, `taxon`, and  `tax_rank` columns with a `taxon_name` column
+
+
+## class2tree
+
+Perhaps this could be modified to take `taxonomy` class as input, since that could be the output of `classifications`.
+If so, it might make more sense to be in the `taxa` package, or another focused on visluizing taxonomic info.
+
+
+## comm2sci
+
+```{r}
+comm2sci(commnames='american black bear')
+comm2sci(commnames='american black bear')
+comm2sci(commnames='black bear', db='itis', simplify = FALSE)
+```
+
+Could return a list of `taxon_name` vectors
+
+
+## eol_search
+
+```{r}
+x <- eol_search(terms='Homo')
+x
+```
+
+pageid, name, link columns could be replaced by `taxon_name` vector.
+
+
+## eubon_search
+
+```{r}
+eubon_search("Prionus")
+```
+
+A lot of these columns could be made into a `taxon_name` vector or a `taxon` vector if we want the synonyms to be incorperated. 
+
+
+## fg_name_search
+
+```{r}
+fg_name_search(q = "Gymnopus")
+```
+
+A lot of these columns could be made into a `taxon_name` vector or a `taxon` vector if we want the synonyms to be incorperated. 
+
+
+## id2name
+
+```{r}
+id2name(19322, db = "itis")
+```
+
+Can return `taxon_name` vector
+

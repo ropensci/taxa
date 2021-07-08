@@ -1,0 +1,47 @@
+
+
+# Goals of the taxa package
+
+## Encode taxonomic information from divserse sources
+
+Taxonomic data can come from many different sources including:
+
+* Sequence data annotations
+* Occurance data annotations
+* Taxonomy databases
+* Museum records
+* Species checklists
+* Herbarium records
+
+Each of these might encode taxonomic data in different ways.
+Sometimes the taxonomic data itself is the focus and sometimes it is only one of many ways to annotate the data.
+Therefore `taxa` needs to be intuitve enough so that users not interested in the intirciaes of taxonomy can ignore them, while sill allowing for more adavnce usages when needed.
+
+## Combine taxonomic data from multiple sources
+
+Combining taxonomic data is difficult since there any many conflicting taxonomies, so `taxa` needs to support conflicting taxonomies.
+Often users will have conflicting taxonomic data when combining sources, but they will want to combine it in such a way that a consensus taxonomy can be reached.
+Therefore, tools will be needed to identify and resolve conflicts
+
+## Filtering taxonomic data
+
+Hierarchical data is difficult to filter, so `taxa` needs special filtering functions.
+These need to operate fast enough to work on datasets with 10,000 taxa or more.
+
+
+## Manipulating taxonomic data
+
+There should be tools to modify taxonomies, including:
+
+* Add taxa
+* Remove taxa
+* Combine taxa as synonyms
+* Spilt taxa with synonyms into different taxa
+* Change/add ranks, names, authorities, etc
+
+
+## Exploring taxonomic data
+
+The `taxa` pacakge will need ways to explore taxonomic hierarchies interactivly.
+Plotting taxonomic data is complex so is best left to other packages, but text-based tree exploration should be supported. 
+Combined with effective filtering techniques, this should be sufficient.

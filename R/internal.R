@@ -105,182 +105,39 @@ limited_print <- function(chars, prefix = "", sep = ", ", mid = " ... ",
 }
 
 
-#' Return name of database
-#'
-#' This is meant to return the name of a database when it is not known if the
-#' input is a `TaxonDatabase` object or a simple character vector.
-#'
-#' @param input Either a character vector or `TaxonDatabase` class
-#'
-#' @return The name of the database
-#'
 #' @keywords internal
-get_database_name <- function(input) {
-  if ("TaxonDatabase" %in% class(input)) {
-    database_name <- input$name
-  } else {
-    database_name <- input
+named_field <- function(x, i) {
+  out <- vctrs::field(x, i)
+  if (! is.null(names(x))) {
+    names(out) <- names(x)
   }
-  return(database_name)
+  return(out)
 }
 
 
-#' Like `strsplit`, but with multiple separators
+#' Remove names from fields in a vctrs rcrd
 #'
-#' Splits items in a vector by multiple separators.
+#' Remove names from fields in a vctrs rcrd
 #'
-#' @param input A character vector
-#' @param split One or more separators to use to split `input`
-#' @param ... Passed to [base::strsplit()]
+#' @param x a vctrs rcrd
 #'
 #' @keywords internal
-multi_sep_split <- function(input, split, ...) {
-  lapply(input, function(x) {
-    for (sep in split) {
-      x <- unlist(strsplit(x, split = sep, ...))
-    }
-    return(x)
-  })
-}
-
-
-#' Get indexes of a unique set of the input
-#'
-#' @keywords internal
-unique_mapping <- function(input) {
-  unique_input <- unique(input)
-  vapply(input, function(x) {if (is.na(x)) which(is.na(unique_input)) else which(x == unique_input)}, numeric(1))
-}
-
-
-#' Run a function on unique values of a iterable
-#'
-#' Runs a function on unique values of a list/vector and then reformats the
-#' output so there is a one-to-one relationship with the input.
-#'
-#' @param input What to pass to \code{func}
-#' @param func (\code{function})
-#' @param ... passed to \code{func}
-#'
-#' @keywords internal
-map_unique <- function(input, func, ...) {
-  input_class <- class(input)
-  unique_input <- unique(input)
-  class(unique_input) <- input_class
-  func(unique_input, ...)[unique_mapping(input)]
-}
-
-
-#' Converts decimal numbers to other bases
-#'
-#' Converts from base 10 to other bases represented by a given set of symbols.
-#'
-#' @param numbers One or more numbers to convert.
-#' @param symbols The set of symbols to use for the new base.
-#' @param base The base to convert to.
-#' @param min_length The minimum number of symbols in each result.
-#'
-#' @return character vector
-#'
-#' @keywords internal
-convert_base <- function(numbers, symbols = letters, base = length(symbols),
-                         min_length = 0) {
-
-  # A modification of the `dec2base` function in the `oro.dicom` package
-  #    Copyright (c) 2015, Brandon Whitcher
-  convert_one <- function (n)  {
-    if (is.na(n)) {
-      return(NA_character_)
-    }
-    max_length <- max(trunc(log(max(n, 1))/log(base)) + 1, min_length)
-    power <- rep(1, length(n)) * base^((max_length - 1):0)
-    n <- n * rep(1, max_length)
-    digits <- floor((n%%(base * power))/power)
-    paste(symbols[digits + 1], collapse = "")
+unname_fields <- function(x) {
+  for (f in vctrs::fields(x)) {
+    vctrs::field(x, f) <- unname(vctrs::field(x, f))
   }
-
-  vapply(as.integer(numbers), convert_one, character(1))
-
+  return(x)
 }
 
 
-#' check for packages
-#'
-#' check for packages, and stop if not installed
-#'
-#' @param package The name of the package
-#'
-#' @return `TRUE` if package is present
-#'
 #' @keywords internal
-check_for_pkg <- function(package) {
-  if (!requireNamespace(package, quietly = TRUE)) {
-    stop("Please install ", package, call. = FALSE)
-  } else {
-    invisible(TRUE)
+must_be_length_1 <- function(x) {
+  if (is.logical(x)) {
+    x <- which(x)
   }
-}
-
-
-#' Get input from dots or list
-#'
-#' Get input from dots or list, but not both.
-#' Throws an error if both are supplied.
-#'
-#' @param ... Dots input
-#' @param .list List input
-#'
-#' @return A list of inputs
-#'
-#' @keywords internal
-get_dots_or_list <- function(..., .list = NULL) {
-  dots_input <- list(...)
-  list_input <- .list
-  if (length(dots_input) > 0 && length(list_input) == 0) {
-    return(dots_input)
-  } else if (length(dots_input) == 0 && length(list_input) > 0) {
-    return(list_input)
-  } else if (length(dots_input) > 0 && length(list_input) > 0) {
-    stop("Both `...` and `.list` were supplied. Only one can be used at a time.",
-         call. = FALSE)
-  } else {
-    return(list())
-  }
-}
-
-#' Format a proportion as a printed percent
-#'
-#' Format a proportion as a printed percent
-#'
-#' @param prop The proportion
-#' @param ... passed to `format`
-#' @inheritParams base::format
-#'
-#' @return character
-#'
-#' @keywords internal
-to_percent <- function(prop, digits = 3, ...) {
-  if (prop < .00001) {
-    return("< 0.001%")
-  } else {
-    return(paste0(format(prop * 100, digits = digits, ...), '%'))
-  }
-}
-
-
-#' Check length of thing
-#'
-#' Check the length of an object, be it list, vector, or table.
-#'
-#' @param obj
-#'
-#' @return \code{numeric} of length 1.
-#'
-#' @keywords internal
-length_of_thing <- function(obj) {
-  if (is.data.frame(obj)) {
-    return(nrow(obj))
-  } else {
-    return(length(obj))
+  if (length(x) < 1) {
+    stop(call. = FALSE, 'attempt to select less than one element')
+  } else if (length(x) > 1) {
+    stop(call. = FALSE, 'attempt to select more than one element')
   }
 }

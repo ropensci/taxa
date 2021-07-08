@@ -1,0 +1,14 @@
+
+
+# Adding getters and setters
+
+Make consistnet getters/setters for all classes with the following characteristics:
+
+* The source values are private and prefixed with `my_`
+* The active bindings return objects, but check the object type when setting and can accept vectors when setting. They basically pretend to be the source values.
+* objects returned by active bindings can be converted to characters by `as.character`
+* Remove the ability to store vectors instead of objects. Vectors given to active bindings are converted to objects automatically.
+* Use `taxon_names`, `taxon_ranks`, and `taxon_ids` S3 functions for all classes as vector-based getter/setters. Make them usable as setters( e.g. `taxon_names<-`). It might be a bit odd to use `taxon_names` to get/set of `taxon` objects, but having only one function name for everything will make it easy to use.
+* Make `taxonomy`/`taxmap` and `hierarcy` inherit `taxa`, so its getters/setters work for them. 
+* S3 setters pass by value, R6 setters pass by reference
+* All vailidity checks are in the active binding setters when possible. Any ones that rely on combinations of arguments are in the class initialization after the active binding checks

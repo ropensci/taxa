@@ -1,48 +1,92 @@
 ## Test environments and check results
 
-### local: ubuntu 18.04, R 3.6.3
+### Local computer: Pop!_OS 20.04 LTS, R version 4.0.3
 
 0 errors | 0 warnings | 0 notes
 
-### travis-ci: ubuntu 14.04.05, R development
+### win-builder (devel and release)
 
-0 errors | 0 warnings | 0 notes
+0 errors | 0 warnings | 1 notes
 
-### travis-ci: ubuntu 14.04.05, R 4.0.0
+* checking CRAN incoming feasibility ... NOTE
+Maintainer: 'Zachary Foster <zacharyfoster1989@gmail.com>'
 
-0 errors | 0 warnings | 0 notes
+License components with restrictions and base license permitting such:
+  MIT + file LICENSE
+File 'LICENSE':
+  MIT License
+  
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+  
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+  
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
 
-### Rhub: Windows Server 2008 R2 SP1, R-devel, 32/64 bit
+Possibly mis-spelled words in DESCRIPTION:
+  Vectorized (6:42)
 
-1223#> * checking package dependencies ... ERROR
-1224#> Packages required but not available:
-1225#> 'stringr', 'tidyr', 'taxize'
-1226#> Packages suggested but not available: 'roxygen2', 'testthat', 'rmarkdown'
-1227#> VignetteBuilder package required for checking but not installed: 'knitr'
-1228#> 'jsonlite', 'dplyr', 'lazyeval', 'tibble', 'knitr', 'rlang',
+Found the following (possibly) invalid URLs:
+  URL: http://www.repostatus.org/#wip (moved to https://www.repostatus.org/)
+    From: README.md
+    Status: 200
+    Message: OK
 
-### Rhub: Ubuntu Linux 16.04 LTS, R-release, GCC
 
-0 errors | 0 warnings | 0 notes
+### Rhub (Fedora Linux, R-devel and	Ubuntu Linux 20.04.1 LTS, R-release)
 
-### Rhub: Fedora Linux, R-devel, clang, gfortran
+0 errors | 0 warnings | 1 notes
 
-0 errors | 0 warnings | 0 notes
+* checking CRAN incoming feasibility ... NOTE
+Maintainer: 'Zachary Foster <zacharyfoster1989@gmail.com>'
 
-### Win builder: R devel
+License components with restrictions and base license permitting such:
+  MIT + file LICENSE
+File 'LICENSE':
+  MIT License
+  
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+  
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+  
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
 
-0 errors | 0 warnings | 0 notes
+Possibly mis-spelled words in DESCRIPTION:
+  Vectorized (6:42)
 
-### Win builder: R version 4.0.0 (2020-04-24)
-
-0 errors | 0 warnings | 0 notes
+Found the following (possibly) invalid URLs:
+  URL: http://www.repostatus.org/#wip (moved to https://www.repostatus.org/)
+    From: README.md
+    Status: 200
+    Message: OK
 
 ## Reverse dependencies
 
-### metacoder
-
-I also maintain `metacoder` and the current CRAN version should be compatible.
-
 ### taxlist
 
-`taxa` is in the suggests and no code from `taxa` is actually used.
+The only code used is a function to convert a class used in `taxa` to one used in `taxlist`.
+This function will break, but no other functionality in `taxlist` should be affected.
+I have alerted the maintainer to this issue 2 weeks ago (Jun 24).

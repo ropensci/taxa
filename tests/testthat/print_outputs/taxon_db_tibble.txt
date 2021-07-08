@@ -1,0 +1,8 @@
+> print(tibble::tibble(x))
+[90m# A tibble: 3 x 1[39m
+  x       
+  [3m[90m<tax_db>[39m[23m
+[90m1[39m ncbi    
+[90m2[39m ncbi    
+[90m3[39m itis    
+
