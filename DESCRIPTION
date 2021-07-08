@@ -19,7 +19,7 @@ Depends:
     vctrs
 LazyLoad: yes
 Encoding: UTF-8
-License: MIT
+License: MIT + file LICENSE
 URL: https://github.com/ropensci/taxa
 BugReports: https://github.com/ropensci/taxa/issues
 Roxygen: list(markdown = TRUE)
