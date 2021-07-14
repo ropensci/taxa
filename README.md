@@ -1,8 +1,5 @@
 # taxa
 
-[![Build
-Status](https://travis-ci.org/ropensci/taxa.svg?branch=master)](https://travis-ci.org/ropensci/taxa)
-[![codecov](https://codecov.io/gh/ropensci/taxa/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/taxa)
 [![Project Status: WIP - Initial development is in progress, but there
 has not yet been a stable, usable release suitable for the
 public.](http://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/)
@@ -11,7 +8,17 @@ version](http://www.r-pkg.org/badges/version/taxa)](https://cran.r-project.org/p
 
 This is an R package that provides classes to store and manipulate
 taxonomic data. Most of the classes can be used like base R vectors.
-This project is currently under development package.
+This project is a partial rewrite of the previous version of `taxa` and
+is currently under development.
+
+**A note about recent changes:**
+
+This is beginning of a complete rewrite of the previous `taxa` package
+to make the more basic component classes more like base R vectors. The
+`taxmap` class is not yet reimplemented, but will be similar to the
+class in the previous versions of taxa. The old version of `taxa` has
+been incorporated into the `metacoder` package until this version of
+taxa is mature, at which time `metacoder` will also use this version.
 
 ## Contributors
 
