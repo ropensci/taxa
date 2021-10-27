@@ -298,6 +298,11 @@ names.taxa_taxon <- function(x) {
 
 #' @export
 `[<-.taxa_taxon` <- function(x, i, j, value) {
+  # If value can be cast to taxon with rank info, then update ranks
+  if (is_taxon(value)) {
+    tax_rank(x)[i] <- tax_rank(value)
+  }
+
   # NOTE: This is a hack to make a vctrs rcrd class work with names.
   #   At the time of writing, names are not supported.
   #   It should be unnecessary eventually

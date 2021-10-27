@@ -188,7 +188,11 @@ printed_taxon_rank <- function(x, color = FALSE) {
   out <- vctrs::vec_data(x)
   styles <- rank_level_color_funcs(levels(x))
   out[! is.na(out)] <- vapply(out[! is.na(out)], FUN.VALUE = character(1), function(r) {
-    styles[[r]](r)
+    if (r %in% names(styles)) {
+      styles[[r]](r)
+    } else {
+      crayon::red(r)
+    }
   })
   out <- font_na(out)
   if (! color) {
