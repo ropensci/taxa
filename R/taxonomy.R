@@ -1020,7 +1020,7 @@ n_supertaxa.taxa_taxonomy <- function(x, subset = NULL, max_depth = NULL, includ
 
 #' @export
 as_data_frame.taxa_taxonomy <- function(x, row.names = NULL, optional = FALSE, ...,
-                                        stringsAsFactors = default.stringsAsFactors()) {
+                                        stringsAsFactors = FALSE) {
   out <- as_data_frame(as_taxon(x))
   cbind(supertaxon = vctrs::field(x, 'supertaxa'), out)
 }

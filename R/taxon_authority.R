@@ -501,7 +501,7 @@ is.na.taxa_taxon_authority <- function(x) {
 
 #' @export
 as_data_frame.taxa_taxon_authority <- function(x, row.names = NULL, optional = FALSE, ...,
-                                               stringsAsFactors = default.stringsAsFactors()) {
+                                               stringsAsFactors = FALSE) {
   data.frame(tax_author = tax_author(x),
              tax_date = tax_date(x),
              tax_cite = tax_cite(x),

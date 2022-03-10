@@ -309,7 +309,7 @@ is.na.taxa_taxon_db <- function(x) {
 
 #' @export
 as_data_frame.taxa_taxon_db <- function(x, row.names = NULL, optional = FALSE, ...,
-                                        stringsAsFactors = default.stringsAsFactors()) {
+                                        stringsAsFactors = FALSE) {
   data.frame(tax_db = as.character(x), row.names = row.names,
              stringsAsFactors = stringsAsFactors, ...)
 }

@@ -72,13 +72,13 @@
 #'
 #' @export
 as_data_frame <- function(x, row.names = NULL, optional = FALSE, ...,
-                          stringsAsFactors = default.stringsAsFactors()) {
+                          stringsAsFactors = FALSE) {
   UseMethod('as_data_frame')
 }
 
 #' @export
 as_data_frame.default <- function(x, row.names = NULL, optional = FALSE, ...,
-                                  stringsAsFactors = default.stringsAsFactors()) {
+                                  stringsAsFactors = FALSE) {
   as.data.frame(x, row.names = row.names, optional = optional, stringsAsFactors = stringsAsFactors, ...)
 }
 

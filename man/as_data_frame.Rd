@@ -9,7 +9,7 @@ as_data_frame(
   row.names = NULL,
   optional = FALSE,
   ...,
-  stringsAsFactors = default.stringsAsFactors()
+  stringsAsFactors = FALSE
 )
 }
 \arguments{

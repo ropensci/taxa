@@ -499,7 +499,7 @@ is.na.taxa_taxon_id <- function(x) {
 
 #' @export
 as_data_frame.taxa_taxon_id <- function(x, row.names = NULL, optional = FALSE, ...,
-                                        stringsAsFactors = default.stringsAsFactors()) {
+                                        stringsAsFactors = FALSE) {
   cbind(
     data.frame(tax_id = as.character(x), row.names = row.names, stringsAsFactors = stringsAsFactors, ...),
     as_data_frame(tax_db(x), row.names = row.names, stringsAsFactors = stringsAsFactors, ...)
