@@ -7,7 +7,7 @@ Description: Provides classes for storing and manipulating taxonomic data.
  and authorities, taxon IDs from databases, taxon ranks, and other types of
  information. More complex classes are provided to store taxonomic trees and
  user-defined data associated with them.
-Version: 0.4.0
+Version: 0.4.1
 Authors@R: c(
     person("Scott", "Chamberlain", role = "aut", 
        email = "myrmecocystus+r@gmail.com", comment = c(ORCID = "0000-0003-1444-9135")),
