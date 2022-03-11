@@ -21,7 +21,7 @@ Defines valid taxonomic databases
 \section{Attribution}{
 
 
-This code is copied from the code handling options in \link{knitr}.
+This code is copied from the code handling options in the knitr package.
 }
 
 \keyword{internal}

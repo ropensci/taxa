@@ -26,7 +26,7 @@ database the following information is included:
 \section{Attribution}{
 
 
-This code is based on the code handling options in \link{knitr}.
+This code is based on the code handling options in the knitr package.
 }
 
 \examples{

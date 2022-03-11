@@ -24,17 +24,12 @@ URL: https://docs.ropensci.org/taxa/, https://github.com/ropensci/taxa
 BugReports: https://github.com/ropensci/taxa/issues
 Roxygen: list(markdown = TRUE)
 Imports:
-    R6,
-    jsonlite,
     dplyr,
-    lazyeval,
     magrittr,
     tibble,
-    knitr,
     rlang,
     stringr,
     crayon,
-    tidyr,
     utils,
     pillar,
     methods,

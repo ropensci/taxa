@@ -158,7 +158,7 @@ database_ref <- c(
 #'
 #' @section Attribution:
 #'
-#' This code is copied from the code handling options in [knitr].
+#' This code is copied from the code handling options in the knitr package.
 #'
 #' @keywords internal
 default_db_ref <- function(defaults = list()) {
@@ -233,7 +233,7 @@ default_db_ref <- function(defaults = list()) {
 #'
 #' @section Attribution:
 #'
-#' This code is based on the code handling options in [knitr].
+#' This code is based on the code handling options in the knitr package.
 #'
 #' @examples
 #'

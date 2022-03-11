@@ -1,3 +1,11 @@
+taxa 0.4.1
+==========
+
+Minor update
+
+* Fixed `taxonomy` printing error
+* Removed `default.stringsAsFactors` since it is depreciated.
+
 taxa 0.4.0
 ==========
 
