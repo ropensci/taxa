@@ -6,9 +6,9 @@
 \usage{
 taxon_authority(
   author = character(),
-  date = NA,
-  citation = NA,
-  .names = NA,
+  date = "",
+  citation = "",
+  .names = "",
   extract_date = TRUE
 )
 }

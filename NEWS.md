@@ -1,3 +1,8 @@
+taxa current
+============
+
+* Experimenting with using `''` instead of `NA` for missing values at the suggestion of Davis Vaughan ([issue #212](https://github.com/ropensci/taxa/issues/212)).
+
 taxa 0.4.1
 ==========
 

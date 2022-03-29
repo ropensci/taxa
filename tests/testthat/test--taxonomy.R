@@ -361,7 +361,7 @@ test_that("taxonomy objects can be converted to factor", {
   x <- taxonomy(c('Carnivora', 'Felidae', 'Panthera', 'Panthera leo',
                   'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
                 supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7))
-  expect_equal(as.factor(x), as.factor(as.character(x)))
+  expect_equivalent(as.factor(x), as.factor(as.character(x)))
 })
 
 test_that("named taxonomy objects can be converted to factor", {
@@ -369,7 +369,7 @@ test_that("named taxonomy objects can be converted to factor", {
                   'Panthera tigris', 'Ursidae', 'Ursus', 'Ursus arctos'),
                 supertaxa = c(NA, 1, 2, 3, 3, 1, 6, 7),
                 .names = letters[1:8])
-  expect_equal(as.factor(x), as.factor(as.character(x)))
+  expect_equivalent(as.factor(x), as.factor(as.character(x)))
 })
 
 
@@ -402,7 +402,7 @@ test_that("taxonomy objects can be converted to a data.frame", {
                      'L.', 'Fischer de Waldheim', 'L.', 'L.'),
       tax_date = c('1821', '1817', '1816', '1758',
                    '1758', '1817', '1758', '1758'),
-      tax_cite = NA_character_
+      tax_cite = ''
       )
   )
 })
@@ -435,7 +435,7 @@ test_that("named taxonomy objects can be converted to data.frame", {
                      'L.', 'Fischer de Waldheim', 'L.', 'L.'),
       tax_date = c('1821', '1817', '1816', '1758',
                    '1758', '1817', '1758', '1758'),
-      tax_cite = NA_character_
+      tax_cite = ''
     )
   )
 })
@@ -470,7 +470,7 @@ test_that("taxonomy objects can be converted to a tibble", {
                      'L.', 'Fischer de Waldheim', 'L.', 'L.'),
       tax_date = c('1821', '1817', '1816', '1758',
                    '1758', '1817', '1758', '1758'),
-      tax_cite = NA_character_
+      tax_cite = ''
     )
   )
 })
@@ -503,7 +503,7 @@ test_that("named taxonomy objects can be converted to a tibble", {
                      'L.', 'Fischer de Waldheim', 'L.', 'L.'),
       tax_date = c('1821', '1817', '1816', '1758',
                    '1758', '1817', '1758', '1758'),
-      tax_cite = NA_character_
+      tax_cite = ''
     )
   )
 })

@@ -4,6 +4,6 @@
   [3m[90m<taxon>[39m[23m                                
 [90m1[39m [90m9606[39m[90m|[39m[3mHomo sapiens[23m [90mLinnaeus 1758[39m[90m|[39m[34mspecies[39m
 [90m2[39m [90m1386[39m[90m|[39m[3mBacillus[23m [90mCohn 1872[39m[90m|[39m[34mgenus[39m          
-[90m3[39m [90m4890[39m[90m|[39mAscomycota[90m|[39m[90mphylum[39m                 
+[90m3[39m [90m4890[39m[90m|[39mAscomycota [90mNA [39m[90m|[39m[90mphylum[39m             
 [90m4[39m [90m4345[39m[90m|[39mEricaceae [90mJuss. 1789[39m[90m|[39m[36mfamily[39m       
 

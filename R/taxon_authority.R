@@ -17,7 +17,7 @@
 #' @keywords internal
 new_taxon_authority <- function(.names = NULL, author = character(), date = character(), citation = character()) {
   # Set names to NA if not set
-  if (is.null(names) || all(is.na(.names))) {
+  if (is.null(names) || all(is.na(.names)) || all(.names == "")) {
     .names_set <- FALSE
     .names <- vctrs::vec_recycle(NA_character_, length(author))
   } else {
@@ -77,7 +77,7 @@ new_taxon_authority <- function(.names = NULL, author = character(), date = char
 #' as_data_frame(x)
 #'
 #' @export
-taxon_authority <- function(author = character(), date = NA, citation = NA, .names = NA, extract_date = TRUE) {
+taxon_authority <- function(author = character(), date = "", citation = "", .names = "", extract_date = TRUE) {
   .names <- vctrs::vec_cast(.names, character())
   author <- vctrs::vec_cast(author, character())
   date <- vctrs::vec_cast(date, character())
@@ -445,6 +445,13 @@ vec_cast.data.frame.taxa_taxon_authority <- function(x, to, ..., x_arg, to_arg) 
 # S3 equality and comparison functions
 #--------------------------------------------------------------------------------
 
+#' @rdname taxa_comparison_funcs
+#' @importFrom vctrs vec_proxy_equal
+#' @export
+#' @keywords internal
+vec_proxy_equal.taxa_taxon_authority <- function(x, ...) {
+  as_data_frame(x)
+}
 
 
 #--------------------------------------------------------------------------------
@@ -523,7 +530,7 @@ as_tibble.taxa_taxon_authority <- function(x, ...) {
 #' @keywords internal
 parse_date_from_author <- function(x) {
   parts <- stringr::str_match(tax_author(x), '^(.+?),? *([0-9]{4}) *$')
-  to_replace <- unname(stats::complete.cases(parts) & is.na(tax_date(x)))
+  to_replace <- unname(stats::complete.cases(parts) & tax_date(x) == "")
   tax_author(x)[to_replace] <- parts[to_replace, 2]
   tax_date(x)[to_replace] <- parts[to_replace, 3]
   return(x)

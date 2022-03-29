@@ -2,6 +2,6 @@
                                         x
 1 9606|Homo sapiens Linnaeus 1758|species
 2           1386|Bacillus Cohn 1872|genus
-3                  4890|Ascomycota|phylum
+3              4890|Ascomycota NA |phylum
 4        4345|Ericaceae Juss. 1789|family
 

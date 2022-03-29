@@ -243,16 +243,16 @@ test_that("taxon objects can be converted to a data.frame", {
   x <- taxon(name = c('Homo sapiens', 'Bacillus', 'Ascomycota', 'Ericaceae'),
              rank = c('species', 'genus', 'phylum', 'family'),
              id = taxon_id(c('9606', '1386', '4890', '4345'), db = 'ncbi'),
-             auth = c('Linnaeus, 1758', 'Cohn 1872', NA, 'Juss., 1789'))
+             auth = c('Linnaeus, 1758', 'Cohn 1872', '', 'Juss., 1789'))
   expect_equal(
     as_data_frame(x),
     data.frame(tax_name = c('Homo sapiens', 'Bacillus', 'Ascomycota', 'Ericaceae'),
                tax_rank = c('species', 'genus', 'phylum', 'family'),
                tax_id = c('9606', '1386', '4890', '4345'),
                tax_db = 'ncbi',
-               tax_author = c('Linnaeus', 'Cohn', NA, 'Juss.'),
-               tax_date = c('1758', '1872', NA, '1789'),
-               tax_cite = NA_character_)
+               tax_author = c('Linnaeus', 'Cohn', '', 'Juss.'),
+               tax_date = c('1758', '1872', '', '1789'),
+               tax_cite = '')
   )
 })
 
@@ -260,7 +260,7 @@ test_that("named taxon objects can be converted to data.frame", {
   x <- taxon(name = c('Homo sapiens', 'Bacillus', 'Ascomycota', 'Ericaceae'),
              rank = c('species', 'genus', 'phylum', 'family'),
              id = taxon_id(c('9606', '1386', '4890', '4345'), db = 'ncbi'),
-             auth = c('Linnaeus, 1758', 'Cohn 1872', NA, 'Juss., 1789'),
+             auth = c('Linnaeus, 1758', 'Cohn 1872', '', 'Juss., 1789'),
              .names = letters[1:4])
   expect_equal(
     as_data_frame(x),
@@ -268,9 +268,9 @@ test_that("named taxon objects can be converted to data.frame", {
                tax_rank = c('species', 'genus', 'phylum', 'family'),
                tax_id = c('9606', '1386', '4890', '4345'),
                tax_db = 'ncbi',
-               tax_author = c('Linnaeus', 'Cohn', NA, 'Juss.'),
-               tax_date = c('1758', '1872', NA, '1789'),
-               tax_cite = NA_character_)
+               tax_author = c('Linnaeus', 'Cohn', '', 'Juss.'),
+               tax_date = c('1758', '1872', '', '1789'),
+               tax_cite = '')
   )
 })
 
@@ -281,16 +281,16 @@ test_that("taxon objects can be converted to a tibble", {
   x <- taxon(name = c('Homo sapiens', 'Bacillus', 'Ascomycota', 'Ericaceae'),
              rank = c('species', 'genus', 'phylum', 'family'),
              id = taxon_id(c('9606', '1386', '4890', '4345'), db = 'ncbi'),
-             auth = c('Linnaeus, 1758', 'Cohn 1872', NA, 'Juss., 1789'))
+             auth = c('Linnaeus, 1758', 'Cohn 1872', '', 'Juss., 1789'))
   expect_equal(
     tibble::as_tibble(x),
     tibble::tibble(tax_name = c('Homo sapiens', 'Bacillus', 'Ascomycota', 'Ericaceae'),
                    tax_rank = c('species', 'genus', 'phylum', 'family'),
                    tax_id = c('9606', '1386', '4890', '4345'),
                    tax_db = 'ncbi',
-                   tax_author = c('Linnaeus', 'Cohn', NA, 'Juss.'),
-                   tax_date = c('1758', '1872', NA, '1789'),
-                   tax_cite = NA_character_)
+                   tax_author = c('Linnaeus', 'Cohn', '', 'Juss.'),
+                   tax_date = c('1758', '1872', '', '1789'),
+                   tax_cite = '')
   )
 })
 
@@ -298,7 +298,7 @@ test_that("named taxon objects can be converted to a tibble", {
   x <- taxon(name = c('Homo sapiens', 'Bacillus', 'Ascomycota', 'Ericaceae'),
              rank = c('species', 'genus', 'phylum', 'family'),
              id = taxon_id(c('9606', '1386', '4890', '4345'), db = 'ncbi'),
-             auth = c('Linnaeus, 1758', 'Cohn 1872', NA, 'Juss., 1789'),
+             auth = c('Linnaeus, 1758', 'Cohn 1872', '', 'Juss., 1789'),
              .names = letters[1:4])
   expect_equal(
     tibble::as_tibble(x),
@@ -306,9 +306,9 @@ test_that("named taxon objects can be converted to a tibble", {
                    tax_rank = c('species', 'genus', 'phylum', 'family'),
                    tax_id = c('9606', '1386', '4890', '4345'),
                    tax_db = 'ncbi',
-                   tax_author = c('Linnaeus', 'Cohn', NA, 'Juss.'),
-                   tax_date = c('1758', '1872', NA, '1789'),
-                   tax_cite = NA_character_)
+                   tax_author = c('Linnaeus', 'Cohn', '', 'Juss.'),
+                   tax_date = c('1758', '1872', '', '1789'),
+                   tax_cite = '')
   )
 })
 
