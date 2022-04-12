@@ -15,8 +15,11 @@
 * checking CRAN incoming feasibility ... NOTE
 Maintainer: 'Zachary Foster <zacharyfoster1989@gmail.com>'
 
-Possibly mis-spelled words in DESCRIPTION:
-  Vectorized (6:42)
+Found the following (possibly) invalid DOIs:
+  DOI: 10.12688/f1000research.14013.1
+    From: inst/CITATION
+    Status: Forbidden
+    Message: 403
 
 ### Rhub 
 
@@ -26,3 +29,13 @@ Possibly mis-spelled words in DESCRIPTION:
 Maintainer: ‘Zachary Foster <zacharyfoster1989@gmail.com>’
 
 Package has help file(s) containing install/render-stage \Sexpr{} expressions but no prebuilt PDF manual.
+
+Found the following (possibly) invalid DOIs:
+  DOI: 10.12688/f1000research.14013.1
+    From: inst/CITATION
+    Status: Forbidden
+    Message: 403
+    
+    
+The DOI is valid and unchanged from last submission, so I think this must be a temporary network error.
+    

@@ -79,7 +79,7 @@ new_taxon_id <- function(.names = NULL, id = character(), db = taxon_db()) {
 #' #taxon_id('NOLETTERS', db = 'ncbi')
 #'
 #' @export
-taxon_id <- function(id = character(), db = NA, .names = NULL) {
+taxon_id <- function(id = character(), db = "", .names = NULL) {
   if (is.null(.names)) {
     .names <- NA_character_
   }
@@ -220,7 +220,7 @@ printed_taxon_id <- function(x, color = FALSE) {
   out <- vctrs::field(x, 'id')
   db <- vctrs::field(x, 'db')
   out <- font_na(out)
-  out <- paste0(out, ifelse(is.na(db), '', font_secondary(paste0(' (', db, ')'))))
+  out <- paste0(out, ifelse(is.na(db) | db == "", '', font_secondary(paste0(' (', db, ')'))))
   if (! color) {
     out <- crayon::strip_style(out)
   }
@@ -437,7 +437,7 @@ vec_cast.data.frame.taxa_taxon_id <- function(x, to, ..., x_arg, to_arg) data.fr
 #' @keywords internal
 vec_proxy_equal.taxa_taxon_id <- function(x, ...) {
   db <- as.character(tax_db(x))
-  db[is.na(db)] <- "NA" # avoids NA comparisons always being NA
+  # db[is.na(db)] <- "NA" # avoids NA comparisons always being NA
   data.frame(id = as.character(x),
              db = db,
              stringsAsFactors = FALSE)
@@ -541,6 +541,6 @@ validate_id_for_database <- function(id, db) {
 #' @keywords internal
 is_valid_database_id <- function(id, db) {
   mapply(function(i, r) {
-    grepl(i, pattern = r) | is.na(i)
+    is.na(i) | i == '' | grepl(i, pattern = r)
   }, i = id, r = db_ref$get(value = 'id_regex')[db])
 }

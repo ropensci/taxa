@@ -187,7 +187,8 @@ levels.taxa_taxon_rank <- function(x) {
 printed_taxon_rank <- function(x, color = FALSE) {
   out <- vctrs::vec_data(x)
   styles <- rank_level_color_funcs(levels(x))
-  out[! is.na(out)] <- vapply(out[! is.na(out)], FUN.VALUE = character(1), function(r) {
+  is_a_value <- ! is.na(out) & out != ""
+  out[is_a_value] <- vapply(out[is_a_value], FUN.VALUE = character(1), function(r) {
     if (r %in% names(styles)) {
       styles[[r]](r)
     } else {
@@ -525,7 +526,7 @@ c.taxa_taxon_rank <- function(...) {
 
 #' @keywords internal
 validate_rank_levels <- function(rank, levels) {
-  not_defined <- ! is.na(rank) & ! rank %in% as.character(levels)
+  not_defined <- ! is.na(rank) & rank != "" & ! rank %in% as.character(levels)
   if (sum(not_defined) > 0) {
     stop(call. = FALSE,
          'The following rank names are not in `levels`:\n',

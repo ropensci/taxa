@@ -1,7 +1,8 @@
-taxa current
+taxa 0.4.2
 ============
 
 * Experimenting with using `''` instead of `NA` for missing values at the suggestion of Davis Vaughan ([issue #212](https://github.com/ropensci/taxa/issues/212)).
+* Fix failing CRAN tests due to `vctrs` update.
 
 taxa 0.4.1
 ==========

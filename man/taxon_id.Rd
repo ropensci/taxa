@@ -4,7 +4,7 @@
 \alias{taxon_id}
 \title{Taxon ID class}
 \usage{
-taxon_id(id = character(), db = NA, .names = NULL)
+taxon_id(id = character(), db = "", .names = NULL)
 }
 \arguments{
 \item{id}{Zero or more taxonomic ids. Inputs will be transformed to a \link{character} vector if

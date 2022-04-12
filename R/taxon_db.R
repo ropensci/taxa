@@ -328,7 +328,7 @@ as_tibble.taxa_taxon_db <- function(x, ...) {
 
 #' @keywords internal
 is_valid_db_name <- function(db_names) {
-  db_names %in% c(db_ref$get(value = 'name'), NA)
+  db_names %in% c(db_ref$get(value = 'name'), NA, '')
 }
 
 
