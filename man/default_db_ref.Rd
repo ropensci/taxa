@@ -6,15 +6,6 @@
 \usage{
 default_db_ref(defaults = list())
 }
-\arguments{
-\item{name}{(character) name of the database}
-
-\item{url}{(character) url for the database}
-
-\item{desc}{(character) description of the database}
-
-\item{id_regex}{(character) id regex}
-}
 \description{
 Defines valid taxonomic databases
 }

@@ -59,9 +59,9 @@ as_data_frame(x)
 Other classes: 
 \code{\link{[.taxa_classification}()},
 \code{\link{classification}()},
+\code{\link{taxon}()},
 \code{\link{taxon_authority}()},
 \code{\link{taxon_db}()},
-\code{\link{taxon_rank}()},
-\code{\link{taxon}()}
+\code{\link{taxon_rank}()}
 }
 \concept{classes}

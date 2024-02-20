@@ -1,3 +1,8 @@
+taxa 0.4.3
+============
+
+Fixing minor CRAN check issues.
+
 taxa 0.4.2
 ============
 

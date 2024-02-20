@@ -151,11 +151,6 @@ database_ref <- c(
 
 #' Defines valid taxonomic databases
 #'
-#' @param name (character) name of the database
-#' @param url (character) url for the database
-#' @param desc (character) description of the database
-#' @param id_regex (character) id regex
-#'
 #' @section Attribution:
 #'
 #' This code is copied from the code handling options in the knitr package.

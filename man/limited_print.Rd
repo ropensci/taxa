@@ -24,12 +24,12 @@ limited_print(
 
 \item{mid}{What is used to indicate omitted values}
 
+\item{trunc_char}{What is appended onto truncated values}
+
 \item{max_chars}{(\code{numeric} of length 1) The maximum number of
 characters to print.}
 
 \item{type}{(\code{"error"}, \code{"warning"}, \code{"message"}, \code{"cat"}, \code{"print"}, \code{"silent"}, \code{"plain"})}
-
-\item{trunc}{What is appended onto truncated values}
 }
 \value{
 \code{NULL}

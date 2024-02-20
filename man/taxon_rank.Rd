@@ -73,9 +73,9 @@ x[2] <- taxon_rank('superkingdom')
 Other classes: 
 \code{\link{[.taxa_classification}()},
 \code{\link{classification}()},
+\code{\link{taxon}()},
 \code{\link{taxon_authority}()},
 \code{\link{taxon_db}()},
-\code{\link{taxon_id}()},
-\code{\link{taxon}()}
+\code{\link{taxon_id}()}
 }
 \concept{classes}

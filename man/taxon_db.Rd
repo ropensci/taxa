@@ -62,9 +62,9 @@ x <- taxon_db(c('ncbi', 'ncbi', 'my_custom_db'))
 Other classes: 
 \code{\link{[.taxa_classification}()},
 \code{\link{classification}()},
+\code{\link{taxon}()},
 \code{\link{taxon_authority}()},
 \code{\link{taxon_id}()},
-\code{\link{taxon_rank}()},
-\code{\link{taxon}()}
+\code{\link{taxon_rank}()}
 }
 \concept{classes}
