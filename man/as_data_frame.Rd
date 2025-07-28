@@ -33,7 +33,7 @@ as_data_frame(
 }
 \description{
 Convert the information in a taxa object to a \code{data.frame} using base R
-vectors as columns. Use \link{as_tibble} to convert to tibbles.
+vectors as columns. Use \code{\link[tibble:as_tibble]{tibble::as_tibble()}} to convert to tibbles.
 }
 \examples{
 x <- taxon(name = c('Homo sapiens', 'Bacillus', 'Ascomycota', 'Ericaceae'),

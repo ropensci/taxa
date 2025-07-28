@@ -58,7 +58,7 @@
 #' Convert a taxa object to a `data.frame`
 #'
 #' Convert the information in a taxa object to a `data.frame` using base R
-#' vectors as columns. Use [as_tibble] to convert to tibbles.
+#' vectors as columns. Use [tibble::as_tibble()] to convert to tibbles.
 #'
 #' @inheritParams base::as.data.frame
 #' @param x An object defined by taxa, such as [taxon] or [taxon_id]
